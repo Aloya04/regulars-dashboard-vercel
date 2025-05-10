@@ -1,0 +1,110 @@
+import React from "react";
+import { Users, Eye, Gift, DollarSign, Mail, Star } from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import styles from "./BentoGrid.module.css";
+
+const data = [
+  { name: "1", value: 15000 },
+  { name: "5", value: 25000 },
+  { name: "10", value: 20000 },
+  { name: "15", value: 45000 },
+  { name: "20", value: 35000 },
+  { name: "25", value: 40000 },
+  { name: "30", value: 45000 },
+];
+
+const popularItems = [
+  { name: "Bun with cheese", sold: 1053 },
+  { name: "Cappuccino", sold: 960 },
+  { name: "Cinnamon bun", sold: 542 },
+];
+
+function BentoGrid() {
+  return (
+    <div className={styles.bentoContainer}>
+      <div className={styles.leftSection}>
+        <div className={styles.statsGrid}>
+          <div className={styles.card}>
+            <Users className={styles.icon} />
+            <div className={styles.stat}>
+              <h3>89</h3>
+              <p>New Members</p>
+              <span className={styles.badge}>+1%</span>
+            </div>
+          </div>
+          <div className={styles.card}>
+            <Eye className={styles.icon} />
+            <div className={styles.stat}>
+              <h3>5k</h3>
+              <p>Visits</p>
+              <span className={styles.badge}>+2%</span>
+            </div>
+          </div>
+          <div className={styles.card}>
+            <Gift className={styles.icon} />
+            <div className={styles.stat}>
+              <h3>805</h3>
+              <p>Redemptions</p>
+              <span className={styles.badge}>+3%</span>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.salesCard}>
+          <div className={styles.salesHeader}>
+            <h3>Sales</h3>
+            <h2>45,000 DKK</h2>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={data}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Area
+                type="monotone"
+                dataKey="value"
+                stroke="var(--loyal-blue)"
+                fill="var(--loyal-blue)"
+                fillOpacity={0.1}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div className={styles.rightSection}>
+        <div className={styles.infoCard}>
+          <Mail className={styles.icon} />
+          <p>You've got 2 mails!</p>
+        </div>
+
+        <div className={styles.popularCard}>
+          <h3>Popular</h3>
+          <div className={styles.popularList}>
+            {popularItems.map((item, index) => (
+              <div key={index} className={styles.popularItem}>
+                <span>{item.name}</span>
+                <span>{item.sold} sold</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.ratingCard}>
+          <h3>Average Rating</h3>
+          <div className={styles.rating}>4.3</div>
+          <Star className={styles.starIcon} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default BentoGrid;

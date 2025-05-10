@@ -1,0 +1,27 @@
+:root {
+  --true-black: #050505;
+  --solid-white: #ffffff;
+  --warm-welcome: #f5f5f5;
+  --loyal-blue: #007aff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--warm-welcome);
+  color: var(--true-black);
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+}
+
+button {
+  font-family: "Poppins", sans-serif;
+}
+
+#root {
+  min-height: 100vh;
+}

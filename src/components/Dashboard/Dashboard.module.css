@@ -1,0 +1,33 @@
+.dashboard {
+  flex: 1;
+  padding: 32px;
+  margin-left: 306px;
+  transition: margin-left 0.3s ease;
+  background-color: var(--warm-welcome);
+  min-height: 100vh;
+}
+
+.dashboard.collapsed {
+  margin-left: 80px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.notificationBtn {
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--true-black);
+}

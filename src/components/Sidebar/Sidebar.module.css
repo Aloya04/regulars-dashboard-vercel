@@ -1,0 +1,94 @@
+.sidebar {
+  width: 306px;
+  background: var(--true-black);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  padding: 0 12px;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logoImg {
+  height: 40px;
+  width: auto;
+}
+
+.backArrow {
+  color: var(--solid-white);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.menuItems {
+  flex: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  color: var(--solid-white);
+  cursor: pointer;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+  font-size: 16px;
+}
+
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navItem.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navItem svg {
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+  font-size: 20px;
+}
+
+.bottomMenu {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.collapsed .navItem span,
+.collapsed .logo span {
+  display: none;
+}
+
+.collapsed .navItem svg {
+  margin-right: 0;
+}
+
+.collapsed .logoImg {
+  display: none;
+}
