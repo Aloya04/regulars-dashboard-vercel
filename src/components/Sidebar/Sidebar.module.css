@@ -1,9 +1,8 @@
 .sidebar {
   width: 306px;
   background: var(--true-black);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
-  padding: 24px 16px;
+  padding: 36px 16px;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -23,7 +22,8 @@
 .logoWrapper {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .logoImg {
@@ -31,10 +31,10 @@
   width: auto;
 }
 
-.backArrow {
+.collapseArrow {
   color: var(--solid-white);
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   flex-shrink: 0;
 }

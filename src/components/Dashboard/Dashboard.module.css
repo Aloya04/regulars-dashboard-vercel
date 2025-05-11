@@ -31,3 +31,25 @@
   cursor: pointer;
   color: var(--true-black);
 }
+
+/* Responsive Design */
+/* Desktop (default) - above 1440px */
+
+/* Laptop (1024px - 1720px) */
+@media screen and (max-width: 1720px) {
+  .header h1 {
+    font-size: 36px;
+  }
+}
+
+/* Tablet (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+}
+
+/* Mobile (376px - 768px) */
+@media screen and (max-width: 768px) {
+}
+
+/* Small Mobile (below 376px) */
+@media screen and (max-width: 376px) {
+}

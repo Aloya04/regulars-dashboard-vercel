@@ -9,9 +9,9 @@ function FilterBar() {
       <button>Week</button>
       <button className={styles.active}>Month</button>
       <button>Year</button>
-      <button>All Time</button>
+      <button>All time</button>
       <button className={styles.periodButton}>
-        Choose Period
+        Choose period
         <ChevronDown size={16} />
       </button>
     </div>

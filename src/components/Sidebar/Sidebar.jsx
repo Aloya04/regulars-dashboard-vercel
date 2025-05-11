@@ -11,8 +11,8 @@ import {
   Settings,
   HelpCircle,
   User,
-  ArrowLeft,
-  Scan, // Replace ScanBarcode with Scan
+  ArrowLeftFromLine,
+  Scan,
 } from "lucide-react";
 import RegularsLogo from "../../assets/regulars-logo.svg";
 import styles from "./Sidebar.module.css";
@@ -29,7 +29,7 @@ function Sidebar({ isCollapsed, setIsCollapsed }) {
   ];
 
   const bottomMenuItems = [
-    { icon: <Scan />, text: "Scanner" }, // Update to use Scan instead of ScanBarcode
+    { icon: <Scan />, text: "Scanner" },
     { icon: <Settings />, text: "Settings" },
     { icon: <HelpCircle />, text: "Help Center" },
     { icon: <User />, text: "My Profile" },
@@ -39,11 +39,12 @@ function Sidebar({ isCollapsed, setIsCollapsed }) {
     <nav className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ""}`}>
       <div className={styles.logo}>
         <div className={styles.logoWrapper}>
-          <ArrowLeft className={styles.backArrow} />
           <img src={RegularsLogo} alt="Regulars" className={styles.logoImg} />
+          <ArrowLeftFromLine className={styles.collapseArrow} />
         </div>
-        <Menu onClick={() => setIsCollapsed(!isCollapsed)} />
       </div>
+
+      <Menu onClick={() => setIsCollapsed(!isCollapsed)} />
 
       <div className={styles.menuItems}>
         {menuItems.map((item, index) => (

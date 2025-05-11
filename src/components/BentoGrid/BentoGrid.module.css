@@ -100,27 +100,27 @@
 
 .bentoContainer {
   display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 24px;
+  grid-template-columns: 1fr 320px;
+  gap: 56px;
   margin-top: 24px;
 }
 
 .leftSection {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 36px;
 }
 
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: 305px 1fr 1fr;
+  gap: 36px;
 }
 
 .rightSection {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 36px;
 }
 
 .badge {
@@ -144,18 +144,29 @@
 .salesCard {
   background: var(--solid-white);
   border-radius: 30px;
-  padding: 24px;
+  padding: 48px 36px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .salesHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   margin-bottom: 24px;
 }
 
-.salesHeader h2 {
-  font-size: 32px;
-  font-weight: 600;
+.salesHeader h3 {
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--true-black);
   letter-spacing: -0.02em;
+}
+
+.salesHeader h2 {
+  font-size: 64px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 80px;
 }
 
 .ratingCard h3 {
@@ -164,18 +175,27 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
-  .bentoContainer {
-    grid-template-columns: 1fr;
+/* Desktop (default) - above 1440px */
+
+/* Laptop (1024px - 1720px) */
+@media screen and (max-width: 1720px) {
+  .statsGrid {
+    gap: 24px;
   }
 
-  .rightSection {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  .leftSection {
+    gap: 24px;
   }
 }
 
-@media (max-width: 768px) {
-  .statsGrid {
-    grid-template-columns: 1fr;
-  }
+/* Tablet (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+}
+
+/* Mobile (376px - 768px) */
+@media screen and (max-width: 768px) {
+}
+
+/* Small Mobile (below 376px) */
+@media screen and (max-width: 376px) {
 }
