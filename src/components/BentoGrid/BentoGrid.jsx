@@ -32,27 +32,39 @@ function BentoGrid() {
       <div className={styles.leftSection}>
         <div className={styles.statsGrid}>
           <div className={styles.card}>
-            <Users className={styles.icon} />
             <div className={styles.stat}>
-              <h3>89</h3>
-              <p>New Members</p>
-              <span className={styles.badge}>+1%</span>
+              <div className={styles.statHeader}>
+                <h3>89</h3>
+                <span className={styles.badge}>+1%</span>
+              </div>
+              <div className={styles.statRow}>
+                <Users className={styles.icon} />
+                <p>New members</p>
+              </div>
             </div>
           </div>
           <div className={styles.card}>
-            <Eye className={styles.icon} />
             <div className={styles.stat}>
-              <h3>5k</h3>
-              <p>Visits</p>
-              <span className={styles.badge}>+2%</span>
+              <div className={styles.statHeader}>
+                <h3>5k</h3>
+                <span className={styles.badge}>+2%</span>
+              </div>
+              <div className={styles.statRow}>
+                <Eye className={styles.icon} />
+                <p>Visits</p>
+              </div>
             </div>
           </div>
           <div className={styles.card}>
-            <Gift className={styles.icon} />
             <div className={styles.stat}>
-              <h3>805</h3>
-              <p>Redemptions</p>
-              <span className={styles.badge}>+3%</span>
+              <div className={styles.statHeader}>
+                <h3>805</h3>
+                <span className={styles.badge}>+3%</span>
+              </div>
+              <div className={styles.statRow}>
+                <Gift className={styles.icon} />
+                <p>Redemptions</p>
+              </div>
             </div>
           </div>
         </div>

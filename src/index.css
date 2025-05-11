@@ -1,8 +1,10 @@
 :root {
   --true-black: #050505;
   --solid-white: #ffffff;
-  --warm-welcome: #f5f5f5;
+  --warm-welcome: #efe6dd;
   --loyal-blue: #007aff;
+  --green: #1f4d0a;
+  --light-green: #b9e6c0;
 }
 
 * {
@@ -20,6 +22,15 @@ body {
 
 button {
   font-family: "Poppins", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.02em;
 }
 
 #root {

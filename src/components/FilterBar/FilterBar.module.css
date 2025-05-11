@@ -1,22 +1,24 @@
 .filterBar {
   display: flex;
-  gap: 8px;
+  gap: 16px;
   margin-bottom: 24px;
 }
 
 .filterBar button {
-  padding: 8px 16px;
-  border-radius: 100px;
+  padding: 14px 20px;
+  border-radius: 16px;
   border: none;
   background: var(--solid-white);
   cursor: pointer;
   font-family: "Poppins", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .filterBar button.active {
   background: var(--true-black);
   color: var(--solid-white);
+  font-weight: 600;
 }
 
 .filters {

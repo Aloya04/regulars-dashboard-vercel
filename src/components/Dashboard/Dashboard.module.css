@@ -1,6 +1,6 @@
 .dashboard {
   flex: 1;
-  padding: 32px;
+  padding: 36px 48px;
   margin-left: 306px;
   transition: margin-left 0.3s ease;
   background-color: var(--warm-welcome);
@@ -19,7 +19,7 @@
 }
 
 .header h1 {
-  font-size: 32px;
+  font-size: 48px;
   font-weight: 600;
 }
 
