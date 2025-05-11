@@ -150,16 +150,9 @@
 
 .salesHeader {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 24px;
-}
-
-.salesHeader h3 {
-  font-size: 36px;
-  font-weight: 500;
-  color: var(--true-black);
-  letter-spacing: -0.02em;
 }
 
 .salesHeader h2 {
@@ -167,6 +160,13 @@
   font-weight: 600;
   letter-spacing: -0.04em;
   line-height: 80px;
+}
+
+.salesHeader h3 {
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--true-black);
+  letter-spacing: -0.02em;
 }
 
 .ratingCard h3 {
