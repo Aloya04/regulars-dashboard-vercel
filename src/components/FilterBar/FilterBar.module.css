@@ -7,18 +7,27 @@
 .filterBar button {
   padding: 14px 20px;
   border-radius: 16px;
-  border: none;
+  border: 2px solid transparent;
   background: var(--solid-white);
   cursor: pointer;
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.filterBar button:hover {
+  border-color: var(--true-black);
 }
 
 .filterBar button.active {
   background: var(--true-black);
   color: var(--solid-white);
   font-weight: 600;
+}
+
+.filterBar button.active:hover {
+  border-color: var(--solid-white);
 }
 
 .filters {
