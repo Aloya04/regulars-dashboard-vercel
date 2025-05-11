@@ -8,9 +8,6 @@
 
 .card,
 .salesCard,
-.infoCard,
-.popularCard,
-.ratingCard,
 .chartCard {
   background: var(--solid-white);
   padding: 48px 36px;
@@ -72,14 +69,29 @@
   letter-spacing: -0.02em;
 }
 
+.infoCard,
+.ratingCard {
+  background: var(--solid-white);
+  padding: 36px;
+  border-radius: 30px;
+}
+
+.infoContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .popularCard {
   grid-column: 4;
   background: var(--solid-white);
-  padding: 24px;
+  padding: 36px;
   border-radius: 30px;
 }
 
 .popularCard h3 {
+  font-size: 36px;
+  font-weight: 500;
   color: var(--true-black);
   letter-spacing: -0.02em;
 }
@@ -151,7 +163,7 @@
 .salesHeader {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: top;
   margin-bottom: 24px;
 }
 
@@ -169,7 +181,22 @@
   letter-spacing: -0.02em;
 }
 
+.salesAmount {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .ratingCard h3 {
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--true-black);
+  letter-spacing: -0.02em;
+}
+
+.infoCard h3 {
+  font-size: 36px;
+  font-weight: 500;
   color: var(--true-black);
   letter-spacing: -0.02em;
 }
@@ -184,6 +211,10 @@
   }
 
   .leftSection {
+    gap: 24px;
+  }
+
+  .rightSection {
     gap: 24px;
   }
 }

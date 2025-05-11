@@ -1,5 +1,5 @@
 import React from "react";
-import { Users, Eye, Gift, DollarSign, Mail, Star } from "lucide-react";
+import { Users, Eye, Gift, DollarSign, Mail } from "lucide-react";
 import {
   AreaChart,
   Area,
@@ -72,7 +72,10 @@ function BentoGrid() {
         <div className={styles.salesCard}>
           <div className={styles.salesHeader}>
             <h3>Sales</h3>
-            <h2>45,000 DKK</h2>
+            <div className={styles.salesAmount}>
+              <h2>45,000 DKK</h2>
+              <span className={styles.badge}>+1%</span>
+            </div>
           </div>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={data}>
@@ -93,8 +96,11 @@ function BentoGrid() {
 
       <div className={styles.rightSection}>
         <div className={styles.infoCard}>
-          <Mail className={styles.icon} />
-          <p>You've got 2 mails!</p>
+          <h3>Inbox</h3>
+          <div className={styles.infoContent}>
+            <Mail className={styles.icon} />
+            <p>You've got 2 mails!</p>
+          </div>
         </div>
 
         <div className={styles.popularCard}>
@@ -112,7 +118,6 @@ function BentoGrid() {
         <div className={styles.ratingCard}>
           <h3>Average Rating</h3>
           <div className={styles.rating}>4.3</div>
-          <Star className={styles.starIcon} />
         </div>
       </div>
     </div>
