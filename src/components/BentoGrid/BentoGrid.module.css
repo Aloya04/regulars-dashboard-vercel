@@ -7,6 +7,7 @@
 .chartCard {
   background: var(--solid-white);
   border-radius: 30px;
+  align-self: stretch; /* Ensure cards stretch to fill the row */
 }
 
 /* Card padding variations */
@@ -24,16 +25,27 @@
 /* Layout styles */
 .bentoContainer {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 56px;
-  margin-top: 24px;
+  grid-template-columns: 1fr 320px; /* Left and right sections */
+  gap: 24px; /* Reduced gap for smaller viewports */
+  margin-top: 16px; /* Reduced margin */
+  height: 100%; /* Ensure it takes up available space */
+  overflow-y: auto; /* Allow scrolling if content exceeds height */
 }
 
 .leftSection,
 .rightSection {
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 16px; /* Reduced gap for smaller viewports */
+}
+
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 16px;
+  flex: 1; /* Ensure it takes up remaining space */
+  overflow-y: auto; /* Allow scrolling if content exceeds height */
+  padding-bottom: 16px; /* Add padding at the bottom */
 }
 
 /* Card header styles */
@@ -59,6 +71,9 @@
   display: flex;
   align-items: flex-start;
   gap: 16px;
+  flex: 1 1 calc(33.33% - 16px); /* Take up one-third of the row, minus the gap */
+  justify-content: space-between;
+  align-self: stretch; /* Ensure cards stretch to fill the row */
 }
 
 .icon {
@@ -133,9 +148,9 @@
 }
 
 .statsGrid {
-  display: grid;
-  grid-template-columns: 305px 1fr 1fr;
-  gap: 36px;
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping to the next row */
+  gap: 16px; /* Spacing between cards */
 }
 
 .badge {
@@ -156,6 +171,11 @@
   margin: 16px 0;
 }
 
+.salesCard {
+  
+  overflow: hidden;
+}
+
 .salesHeader {
   display: flex;
   justify-content: space-between;
@@ -164,10 +184,14 @@
 }
 
 .salesHeader h2 {
-  font-size: 64px;
+  font-size: 32px; /* Adjusted font size */
   font-weight: 600;
   letter-spacing: -0.04em;
   line-height: 80px;
+}
+
+.salesHeader h3 {
+  font-size: 24px; /* Adjusted font size */
 }
 
 .salesAmount {
@@ -190,10 +214,28 @@
 
 /* Tablet (768px - 1024px) */
 @media screen and (max-width: 1024px) {
+  .bentoContainer {
+    grid-template-columns: 1fr; /* Stack sections vertically */
+  }
+
+  .statsGrid {
+    flex-wrap: wrap; /* Ensure wrapping for smaller screens */
+  }
+
+  
 }
 
 /* Mobile (376px - 768px) */
 @media screen and (max-width: 768px) {
+  .bentoGrid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for smaller screens */
+    gap: 12px;
+  }
+
+  .card {
+    flex: 1 1 100%; /* Full width for smaller screens */
+    max-width: 100%;
+  }
 }
 
 /* Small Mobile (below 376px) */

@@ -40,7 +40,10 @@ function Sidebar({ isCollapsed, setIsCollapsed }) {
       <div className={styles.logo}>
         <div className={styles.logoWrapper}>
           <img src={RegularsLogo} alt="Regulars" className={styles.logoImg} />
-          <ArrowLeftFromLine className={styles.collapseArrow} />
+          <ArrowLeftFromLine
+            className={styles.collapseArrow}
+            onClick={() => setIsCollapsed(!isCollapsed)}
+          />
         </div>
       </div>
 

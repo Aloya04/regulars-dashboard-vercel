@@ -1,25 +1,28 @@
 .dashboard {
+  display: flex;
+  flex-direction: column;
   flex: 1;
-  padding: 36px 48px;
-  margin-left: 306px;
+  padding: 24px;
+  margin-left: 306px; /* Matches the expanded sidebar width */
   transition: margin-left 0.3s ease;
   background-color: var(--warm-welcome);
-  min-height: 100vh;
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
 }
 
 .dashboard.collapsed {
-  margin-left: 80px;
+  margin-left: 80px; /* Matches the collapsed sidebar width */
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 16px; /* Reduced margin for smaller viewports */
 }
 
 .header h1 {
-  font-size: 48px;
+  font-size: 36px; /* Adjusted font size */
   font-weight: 600;
 }
 
@@ -33,23 +36,19 @@
 }
 
 /* Responsive Design */
-/* Desktop (default) - above 1440px */
+/* Tablet (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+  
 
-/* Laptop (1024px - 1720px) */
-@media screen and (max-width: 1720px) {
   .header h1 {
-    font-size: 36px;
+    font-size: 28px; /* Smaller font size for tablets */
   }
 }
 
-/* Tablet (768px - 1024px) */
-@media screen and (max-width: 1024px) {
-}
-
-/* Mobile (376px - 768px) */
+/* Mobile (below 768px) */
 @media screen and (max-width: 768px) {
-}
-
-/* Small Mobile (below 376px) */
-@media screen and (max-width: 376px) {
+  .dashboard {
+    margin-left: 0; /* Sidebar might be hidden on mobile */
+    
+  }
 }

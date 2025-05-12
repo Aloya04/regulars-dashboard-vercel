@@ -1,4 +1,5 @@
 .appContainer {
   display: flex;
-  min-height: 100vh;
+  min-height: 100vh; /* Ensure the app container spans the full height */
+  overflow: hidden; /* Prevent unnecessary scrolling */
 }

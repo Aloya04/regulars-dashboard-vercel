@@ -1,19 +1,23 @@
 .filterBar {
   display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 12px; /* Reduced gap for smaller viewports */
+  margin-bottom: 16px; /* Reduced margin */
+  flex-wrap: wrap; /* Ensure buttons wrap on smaller screens */
+  justify-content: flex-start; /* Align buttons to the left */
+  align-items: stretch; /* Center items vertically */
 }
 
 .filterBar button {
-  padding: 14px 20px;
-  border-radius: 16px;
+  padding: 10px 16px; /* Adjusted padding */
+  border-radius: 12px; /* Adjusted border radius */
   border: 2px solid transparent;
   background: var(--solid-white);
   cursor: pointer;
   font-family: "Poppins", sans-serif;
-  font-size: 16px;
+  font-size: 14px; /* Adjusted font size */
   font-weight: 500;
   transition: all 0.2s ease;
+  text-align: center; /* Center text inside the button */
 }
 
 .filterBar button:hover {
@@ -32,7 +36,7 @@
 
 .filters {
   display: flex;
-  gap: 12px;
+  gap: px;
   align-items: center;
 }
 
@@ -56,4 +60,28 @@
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .filterBar button {
+    font-size: 12px; /* Smaller font size for tablets */
+    padding: 8px 12px; /* Adjusted padding */
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .periodButton {
+  justify-content: center;
+}
+  .filterBar {
+    justify-content: center; /* Center buttons on smaller screens */
+  }
+
+  .filterBar button {
+    flex-grow: 1; /* Make buttons stretch to fill available space */
+    font-size: 14px; /* Adjust font size */
+    padding: 10px 16px; /* Adjust padding */
+  }
 }
