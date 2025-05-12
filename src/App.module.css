@@ -2,4 +2,24 @@
   display: flex;
   min-height: 100vh; /* Ensure the app container spans the full height */
   overflow: hidden; /* Prevent unnecessary scrolling */
+  position: relative; /* Context for absolute/fixed children if needed, though sidebar is fixed */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 150; /* Adjusted z-index */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Hide after fade */
+}
+
+.overlayVisible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0s; /* Show immediately then fade */
 }

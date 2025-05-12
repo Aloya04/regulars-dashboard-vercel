@@ -1,0 +1,107 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's above other content like sidebar and app overlay */
+  padding: 16px;
+}
+
+.modalDropdown {
+  position: absolute;
+  top: calc(100% + 10px); /* Position below the button wrapper */
+  right: 0;
+  background-color: var(--solid-white);
+  border-radius: 20px; /* Rounded corners like in the image */
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+  width: 380px; /* Adjust width as needed */
+  padding: 20px 24px;
+  z-index: 160; /* Ensure it's above dashboard content but potentially below sidebar in some contexts */
+  border: 1px solid #eee; /* Light border */
+}
+
+.modalDropdown h2 {
+  font-size: 20px; /* Adjusted font size */
+  font-weight: 600; /* Bold like in image */
+  color: var(--true-black);
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.notificationList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Space between items */
+  max-height: 300px; /* Limit height and allow scrolling if many notifications */
+  overflow-y: auto;
+}
+
+.notificationList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notificationList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.notificationList::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.notificationList::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.notificationItem {
+  display: flex;
+  align-items: flex-start; /* Align icon to the top of the text */
+  gap: 12px; /* Space between icon and text */
+}
+
+.notificationIconWrapper {
+  position: relative;
+  flex-shrink: 0; /* Prevent icon from shrinking */
+  margin-top: 2px; /* Align bell icon nicely with text */
+}
+
+.notificationBellIcon {
+  color: var(--true-black);
+}
+
+.newIndicator {
+  position: absolute;
+  top: 0px; /* Position relative to the bell icon */
+  right: 0px;
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  border: 1px solid var(--solid-white); /* Optional: white border around the dot */
+}
+
+.notificationItem p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--true-black);
+  margin: 0;
+}
+
+.noNotifications {
+  text-align: center;
+  color: #666;
+  padding: 20px 0;
+}
+
+/* Remove old modal styles if they exist */
+.modalBackdrop,
+.modalContent,
+.closeButton {
+  /* These styles are no longer used for the dropdown */
+}

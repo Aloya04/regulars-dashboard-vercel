@@ -30,6 +30,25 @@
   margin-top: 16px; /* Reduced margin */
   height: 100%; /* Ensure it takes up available space */
   overflow-y: auto; /* Allow scrolling if content exceeds height */
+  padding-right: 10px; /* For custom scrollbar */
+}
+
+.bentoContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bentoContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bentoContainer::-webkit-scrollbar-thumb {
+  background: var(--true-black);
+  border-radius: 20px;
+  border: 2px solid var(--warm-welcome);
+}
+
+.bentoContainer::-webkit-scrollbar-thumb:hover {
+  background: rgba(5, 5, 5, 0.8);
 }
 
 .leftSection,
@@ -133,6 +152,19 @@
   grid-column: 4;
 }
 
+.popularHeader {
+  display: flex;
+  align-items: baseline; /* Align title and label nicely */
+  gap: 8px; /* Space between "Popular" and "(All Time)" */
+}
+
+.allTimeLabel {
+  font-size: 14px; /* Smaller font size */
+  font-weight: 400; /* Lighter font weight */
+  color: #666; /* Subtle color */
+  white-space: nowrap; /* Prevent wrapping */
+}
+
 .popularList {
   margin-top: 16px;
 }
@@ -172,7 +204,6 @@
 }
 
 .salesCard {
-  
   overflow: hidden;
 }
 
@@ -216,28 +247,183 @@
 @media screen and (max-width: 1024px) {
   .bentoContainer {
     grid-template-columns: 1fr; /* Stack sections vertically */
+    gap: 16px; /* Reduce gap */
+    padding-right: 0; /* Remove padding if custom scrollbar is not desired/needed */
+  }
+  .bentoContainer::-webkit-scrollbar {
+    display: none; /* Hide custom scrollbar on tablet and mobile */
   }
 
   .statsGrid {
     flex-wrap: wrap; /* Ensure wrapping for smaller screens */
   }
 
+  /* Reduce padding for cards on tablet */
+  .card,
+  .salesCard {
+    padding: 32px 24px;
+  }
+
+  .infoCard,
+  .popularCard,
+  .ratingCard {
+    padding: 24px;
+  }
+
+  /* Reduce font sizes on tablet */
+  .salesHeader h3,
+  .popularCard h3,
+  .ratingCard h3,
+  .infoCard h3 {
+    font-size: 28px;
+  }
+
+  .stat h3 {
+    font-size: 64px;
+    line-height: 56px;
+  }
+
+  .stat p {
+    font-size: 18px;
+  }
+
+  .salesHeader h2 {
+    font-size: 28px;
+    line-height: 1.2; 
+  }
+
+  .badge {
+    width: auto; /* Allow badge to size based on content */
+    padding: 4px 8px;
+    height: auto;
+    font-size: 16px;
+  }
+
+  .rating {
+    font-size: 48px;
+  }
   
+  .allTimeLabel {
+    font-size: 13px;
+  }
+  .popularItem span {
+    font-size: 15px;
+  }
 }
 
 /* Mobile (376px - 768px) */
 @media screen and (max-width: 768px) {
   .bentoGrid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for smaller screens */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
     gap: 12px;
+  }
+  .bentoContainer {
+    gap: 12px; /* Further reduce gap */
+  }
+
+  /* Custom scrollbar already hidden from tablet styles */
+
+  .allTimeLabel {
+    font-size: 12px; 
   }
 
   .card {
-    flex: 1 1 100%; /* Full width for smaller screens */
+    flex: 1 1 100%; 
     max-width: 100%;
+    padding: 20px 16px; /* Further reduce padding */
+  }
+
+  /* Further reduce padding for other cards on mobile */
+  .salesCard {
+    padding: 24px 16px;
+  }
+  .infoCard,
+  .popularCard,
+  .ratingCard {
+    padding: 16px;
+  }
+
+  /* Further reduce font sizes on mobile */
+  .salesHeader h3,
+  .popularCard h3,
+  .ratingCard h3,
+  .infoCard h3 {
+    font-size: 20px;
+  }
+
+  .stat h3 {
+    font-size: 48px;
+    line-height: 40px;
+  }
+
+  .stat p {
+    font-size: 14px;
+  }
+  .statHeader {
+    gap: 8px; /* Reduce gap in stat header */
+  }
+
+  .salesHeader {
+    align-items: flex-start; /* Align to start */
+    flex-direction: column; /* Stack title and amount */
+    gap: 8px; /* Space between title and amount block */
+  }
+  .salesHeader h2 {
+    font-size: 24px;
+    line-height: 1.1;
+  }
+  .salesAmount {
+    width: 100%;
+    justify-content: space-between; /* Distribute amount and badge */
+    align-items: center;
+  }
+
+  .badge {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+
+  .rating {
+    font-size: 36px;
+  }
+
+  .popularItem span {
+    font-size: 13px;
+  }
+  .popularItem {
+    padding: 6px 0;
   }
 }
 
 /* Small Mobile (below 376px) */
 @media screen and (max-width: 376px) {
+  .salesHeader h3,
+  .popularCard h3,
+  .ratingCard h3,
+  .infoCard h3 {
+    font-size: 18px; /* Even smaller for very small devices */
+  }
+  .stat h3 {
+    font-size: 40px;
+    line-height: 32px;
+  }
+  .stat p {
+    font-size: 12px;
+  }
+  .salesHeader h2 {
+    font-size: 20px;
+  }
+  .badge {
+    font-size: 10px;
+    padding: 3px 5px;
+  }
+  .rating {
+    font-size: 32px;
+  }
+  .popularItem span {
+    font-size: 12px;
+  }
+  .card, .salesCard, .infoCard, .popularCard, .ratingCard {
+    padding: 12px; /* Minimal padding */
+  }
 }

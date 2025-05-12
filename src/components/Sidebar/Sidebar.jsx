@@ -17,7 +17,7 @@ import {
 import RegularsLogo from "../../assets/regulars-logo.svg";
 import styles from "./Sidebar.module.css";
 
-function Sidebar({ isCollapsed, setIsCollapsed }) {
+function Sidebar({ isMenuOpen, setIsMenuOpen }) {
   const menuItems = [
     { icon: <LayoutDashboard />, text: "Overview", active: true },
     { icon: <CreditCard />, text: "Loyalty Cards" },
@@ -36,18 +36,18 @@ function Sidebar({ isCollapsed, setIsCollapsed }) {
   ];
 
   return (
-    <nav className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ""}`}>
+    <nav className={`${styles.sidebar} ${!isMenuOpen ? styles.menuClosed : ""}`}>
       <div className={styles.logo}>
         <div className={styles.logoWrapper}>
           <img src={RegularsLogo} alt="Regulars" className={styles.logoImg} />
           <ArrowLeftFromLine
             className={styles.collapseArrow}
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           />
         </div>
       </div>
 
-      <Menu onClick={() => setIsCollapsed(!isCollapsed)} />
+      <Menu onClick={() => setIsMenuOpen(!isMenuOpen)} />
 
       <div className={styles.menuItems}>
         {menuItems.map((item, index) => (

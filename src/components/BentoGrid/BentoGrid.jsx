@@ -10,23 +10,13 @@ import {
 } from "recharts";
 import styles from "./BentoGrid.module.css";
 
-const data = [
-  { name: "1", value: 15000 },
-  { name: "5", value: 25000 },
-  { name: "10", value: 20000 },
-  { name: "15", value: 45000 },
-  { name: "20", value: 35000 },
-  { name: "25", value: 40000 },
-  { name: "30", value: 45000 },
-];
+function BentoGrid({ bentoData }) {
+  if (!bentoData) {
+    return <div>Loading data...</div>;
+  }
 
-const popularItems = [
-  { name: "Bun with cheese", sold: 1053 },
-  { name: "Cappuccino", sold: 960 },
-  { name: "Cinnamon bun", sold: 542 },
-];
+  const { stats, sales, graphData, popularItems, inboxMessages, averageRating } = bentoData;
 
-function BentoGrid() {
   return (
     <div className={styles.bentoContainer}>
       <div className={styles.leftSection}>
@@ -34,8 +24,8 @@ function BentoGrid() {
           <div className={styles.card}>
             <div className={styles.stat}>
               <div className={styles.statHeader}>
-                <h3>89</h3>
-                <span className={styles.badge}>+1%</span>
+                <h3>{stats.newMembers.value}</h3>
+                <span className={styles.badge}>{stats.newMembers.trend}</span>
               </div>
               <div className={styles.statRow}>
                 <Users className={styles.icon} />
@@ -46,8 +36,8 @@ function BentoGrid() {
           <div className={styles.card}>
             <div className={styles.stat}>
               <div className={styles.statHeader}>
-                <h3>5k</h3>
-                <span className={styles.badge}>+2%</span>
+                <h3>{stats.visits.value}</h3>
+                <span className={styles.badge}>{stats.visits.trend}</span>
               </div>
               <div className={styles.statRow}>
                 <Eye className={styles.icon} />
@@ -58,8 +48,8 @@ function BentoGrid() {
           <div className={styles.card}>
             <div className={styles.stat}>
               <div className={styles.statHeader}>
-                <h3>805</h3>
-                <span className={styles.badge}>+3%</span>
+                <h3>{stats.redemptions.value}</h3>
+                <span className={styles.badge}>{stats.redemptions.trend}</span>
               </div>
               <div className={styles.statRow}>
                 <Gift className={styles.icon} />
@@ -73,12 +63,12 @@ function BentoGrid() {
           <div className={styles.salesHeader}>
             <h3>Sales</h3>
             <div className={styles.salesAmount}>
-              <h2>45,000 DKK</h2>
-              <span className={styles.badge}>+1%</span>
+              <h2>{sales.amount}</h2>
+              <span className={styles.badge}>{sales.trend}</span>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={data}>
+            <AreaChart data={graphData}>
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
@@ -99,12 +89,15 @@ function BentoGrid() {
           <h3>Inbox</h3>
           <div className={styles.infoContent}>
             <Mail className={styles.icon} />
-            <p>You've got 2 mails!</p>
+            <p>You've got {inboxMessages} mails!</p>
           </div>
         </div>
 
         <div className={styles.popularCard}>
-          <h3>Popular</h3>
+          <div className={styles.popularHeader}>
+            <h3>Popular</h3>
+            <span className={styles.allTimeLabel}>(All Time)</span>
+          </div>
           <div className={styles.popularList}>
             {popularItems.map((item, index) => (
               <div key={index} className={styles.popularItem}>
@@ -117,7 +110,7 @@ function BentoGrid() {
 
         <div className={styles.ratingCard}>
           <h3>Average Rating</h3>
-          <div className={styles.rating}>4.3</div>
+          <div className={styles.rating}>{averageRating}</div>
         </div>
       </div>
     </div>

@@ -4,26 +4,42 @@
   flex: 1;
   padding: 24px;
   margin-left: 306px; /* Matches the expanded sidebar width */
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s ease, margin-right 0.3s ease; /* Updated transition */
   background-color: var(--warm-welcome);
   height: 100vh; /* Full viewport height */
-  overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
+  overflow-y: auto; /* Allow vertical scrolling for content below sticky header */
 }
 
-.dashboard.collapsed {
-  margin-left: 80px; /* Matches the collapsed sidebar width */
+.dashboard.menuClosed {
+  margin-left: 80px; /* Matches the closed sidebar width */
+}
+
+.stickyHeaderArea {
+  position: sticky;
+  top: 0; /* Sticks to the top of the .dashboard's content area */
+  padding-top: 24px; /* Replicate the dashboard's top padding inside sticky area */
+  margin: -4px -24px 0 -24px; /* Counteract dashboard padding to extend bg and shadow to edges */
+  padding-left: 24px; /* Restore padding for content */
+  padding-right: 24px; /* Restore padding for content */
+  background-color: var(--warm-welcome);
+  z-index: 10;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07); /* Subtle shadow */
+  padding-bottom: 16px; /* Space before the BentoGrid starts, shadow applies below this */
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px; /* Reduced margin for smaller viewports */
 }
 
 .header h1 {
   font-size: 36px; /* Adjusted font size */
   font-weight: 600;
+}
+
+.notificationButtonWrapper { /* New style */
+  position: relative; /* For positioning the dropdown */
 }
 
 .notificationBtn {
@@ -38,8 +54,6 @@
 /* Responsive Design */
 /* Tablet (768px - 1024px) */
 @media screen and (max-width: 1024px) {
-  
-
   .header h1 {
     font-size: 28px; /* Smaller font size for tablets */
   }
@@ -48,20 +62,34 @@
 /* Mobile (below 768px) */
 @media screen and (max-width: 768px) {
   .dashboard {
-    margin-left: 0; /* Sidebar might be hidden on mobile */
-    
+    margin-left: 0;
+    max-width: calc(100% - 60px); /* Ensure it doesn't overflow the screen */
+    margin-right: 50px; /* Default: menu open, sidebar overlays content */
+    width: auto; /* Let flexbox determine width */
+    /* transition for margin-right is inherited from .dashboard main style */
   }
 
+  .dashboard.menuClosed {
+    /* When sidebar is CLOSED (80px wide) */
+    margin-right: 60px; 
+    margin-left: 0; 
+  }
 
+  .header h1 {
+    font-size: 24px; /* Further reduce font size for mobile */
+  }
 
-.dashboard.collapsed {
-  margin-left: 0px; /* Matches the collapsed sidebar width */
-  
-
+  .stickyHeaderArea {
+  position: sticky;
+  top: 0; /* Sticks to the top of the .dashboard's content area */
+  padding-top: 0px; /* Replicate the dashboard's top padding inside sticky area */
+  margin: -4px -24px 0 -24px; /* Counteract dashboard padding to extend bg and shadow to edges */
+  padding-left: 24px; /* Restore padding for content */
+  padding-right: 24px; /* Restore padding for content */
+  background-color: var(--warm-welcome);
+  z-index: 10;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07); /* Subtle shadow */
+  padding-bottom: 16px; /* Space before the BentoGrid starts, shadow applies below this */
 }
-.dashboard {
-max-width: calc(100% - 80px); /* Adjusted for mobile */
-}
-
 }
 

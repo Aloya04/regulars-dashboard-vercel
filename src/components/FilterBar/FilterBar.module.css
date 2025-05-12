@@ -18,6 +18,10 @@
   font-weight: 500;
   transition: all 0.2s ease;
   text-align: center; /* Center text inside the button */
+  display: flex; /* For aligning text and icon */
+  align-items: center; /* Vertically align text and icon */
+  justify-content: center; /* Horizontally center content */
+  gap: 6px; /* Space between text and icon */
 }
 
 .filterBar button:hover {
@@ -62,6 +66,13 @@
   gap: 4px;
 }
 
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px; /* Adjust as needed */
+}
+
 /* Responsive Design */
 @media screen and (max-width: 1024px) {
   .filterBar button {
@@ -71,7 +82,9 @@
 }
 
 @media screen and (max-width: 768px) {
-
+  .filterBar {
+    padding-top: 24px;
+  }
   .periodButton {
   justify-content: center;
 }

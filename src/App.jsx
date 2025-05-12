@@ -4,7 +4,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import styles from "./App.module.css";
 
 function App() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(true); // true = menu open, false = menu closed
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -15,14 +15,14 @@ function App() {
 
   return (
     <div className={styles.appContainer}>
-      <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-      {isMobile && !isCollapsed && (
+      <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+      {isMobile && (
         <div
-          className={styles.overlay}
-          onClick={() => setIsCollapsed(true)}
+          className={`${styles.overlay} ${isMenuOpen ? styles.overlayVisible : ""}`}
+          onClick={() => setIsMenuOpen(false)} // Close menu when overlay is clicked
         ></div>
       )}
-      <Dashboard isCollapsed={isCollapsed} />
+      <Dashboard isMenuOpen={isMenuOpen} />
     </div>
   );
 }
