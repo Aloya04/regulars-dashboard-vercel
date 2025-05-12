@@ -1,0 +1,337 @@
+.loyaltyCardsPage {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 24px;
+  margin-left: 306px;
+  transition: margin-left 0.3s ease, margin-right 0.3s ease;
+  background-color: var(--warm-welcome);
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.loyaltyCardsPage.menuClosed {
+  margin-left: 80px;
+}
+
+.stickyHeaderArea {
+  position: sticky;
+  top: 0;
+  padding-top: 24px;
+  margin: -24px -24px 0 -24px; /* Adjusted to cover full width */
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: var(--warm-welcome);
+  z-index: 10;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07);
+  padding-bottom: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px; /* Space below header title */
+}
+
+.header h1 {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.controlsHeader { /* New wrapper for CTA and filters */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  flex-wrap: wrap; /* Allow wrapping if space is tight */
+  gap: 16px; /* Gap between CTA and filter group */
+}
+
+.createCardButton {
+  background-color: var(--loyal-blue);
+  color: var(--solid-white);
+  border: none;
+  border-radius: 8px; /* Consistent with filter buttons */
+  padding: 10px 16px; /* Consistent with filter buttons */
+  font-size: 14px; /* Consistent with filter buttons */
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.createCardButton:hover {
+  background-color: #0056b3; /* Darker blue */
+}
+
+.filterControls {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Reduced gap */
+  flex-wrap: wrap; /* Allow filters to wrap if needed */
+}
+
+.filterControls span {
+  font-size: 14px;
+  color: #555;
+}
+
+.filterDropdown {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: var(--solid-white);
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  background-color: var(--solid-white);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0 10px;
+}
+
+.searchIcon {
+  color: #888;
+  margin-right: 8px;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  padding: 10px 0;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  background-color: transparent;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Reduced minmax */
+  gap: 20px; /* Reduced gap */
+  padding-top: 24px;
+}
+
+.cardContainer {
+  background-color: var(--solid-white);
+  border-radius: 12px; /* Slightly reduced radius */
+  padding: 16px; /* Reduced padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07); /* Softer shadow */
+}
+
+.cardTitle {
+  font-size: 16px; /* Reduced font size */
+  font-weight: 600;
+  margin-bottom: 12px; /* Reduced margin */
+  color: var(--true-black);
+  text-align: center;
+}
+
+.phoneMockup {
+  width: 150px; /* Reduced width */
+  height: 260px; /* Reduced height */
+  border: 6px solid var(--true-black); /* Thinner border */
+  border-radius: 25px; /* Adjusted radius */
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px; /* Reduced margin */
+  overflow: hidden;
+}
+
+.phoneScreen {
+  width: 100%;
+  height: 100%;
+  background-color: var(--warm-welcome); /* Inner screen color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--true-black);
+}
+
+.cardIconCustom {
+  width: 50px; /* Reduced size */
+  height: 50px; /* Reduced size */
+}
+
+.ctaButton {
+  background-color: var(--loyal-blue);
+  color: var(--solid-white);
+  border: none;
+  border-radius: 16px; /* Adjusted radius */
+  padding: 10px 20px; /* Reduced padding */
+  font-size: 14px; /* Reduced font size */
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%;
+  max-width: 180px; /* Adjusted max-width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ctaButton.createButton {
+  background-color: var(--loyal-blue);
+}
+
+.ctaButton:hover {
+  background-color: #0056b3; /* Darker blue */
+}
+
+.tagsContainer {
+  display: flex;
+  gap: 6px; /* Reduced gap */
+  margin-top: 12px; /* Reduced margin */
+  width: 100%;
+  justify-content: center;
+}
+
+.tag {
+  font-size: 11px; /* Reduced font size */
+  padding: 3px 8px; /* Reduced padding */
+  border-radius: 12px; /* Pill shape */
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.activeTag {
+  background-color: var(--light-green);
+  color: var(--green);
+}
+
+.inactiveTag {
+  background-color: #ffe0e0; /* Light red */
+  color: #c0392b; /* Dark red */
+}
+
+.statusDot {
+  width: 6px; /* Reduced size */
+  height: 6px; /* Reduced size */
+  border-radius: 50%;
+  background-color: currentColor; /* Uses the tag's text color */
+}
+
+.typeTag {
+  background-color: #e0e7ff; /* Light blue/purple */
+  color: #4a55c7; /* Darker blue/purple */
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px; /* Reduced gap */
+  margin-top: 16px; /* Reduced margin */
+  width: 100%;
+  justify-content: center;
+}
+
+.actionButton {
+  background: transparent;
+  border: 1px solid #e0e0e0; /* Lighter border */
+  border-radius: 6px; /* Adjusted radius */
+  padding: 6px; /* Reduced padding */
+  cursor: pointer;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.actionButton svg { /* Ensure icons inside buttons are not too large */
+  width: 16px;
+  height: 16px;
+}
+
+.actionButton:hover {
+  background-color: #f0f0f0;
+  color: var(--true-black);
+}
+
+.noCardsMessage { /* Style for the message when no cards are shown */
+  grid-column: 1 / -1; /* Span all columns */
+  text-align: center;
+  padding: 40px 20px;
+  color: #777;
+  font-size: 16px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .loyaltyCardsPage {
+    margin-left: 0;
+    margin-right: 60px; 
+  }
+  .loyaltyCardsPage.menuClosed {
+    margin-right: 60px; /* Keep this if sidebar is fixed on right */
+  }
+  .header h1 {
+    font-size: 24px; /* Adjusted from 28px */
+  }
+  .controlsHeader { /* Adjust controls header for mobile */
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .createCardButton {
+    width: 100%; /* Make CTA full width on mobile */
+    margin-bottom: 12px; /* Space below CTA */
+  }
+  .filterControls {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%; /* Make filter group full width */
+  }
+  .filterDropdown, .searchContainer {
+    width: 100%; /* Make individual filter elements full width */
+  }
+  .searchInput {
+    width: 100%;
+  }
+  .cardsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Further adjust for mobile */
+    gap: 16px;
+  }
+  .cardContainer {
+    padding: 12px;
+  }
+  .cardTitle {
+    font-size: 14px;
+  }
+  .phoneMockup {
+    width: 120px;
+    height: 200px;
+    border-width: 5px;
+    border-radius: 20px;
+  }
+  .cardIconCustom {
+    width: 40px;
+    height: 40px;
+  }
+  .ctaButton {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+  .actionButton {
+    padding: 5px;
+  }
+  .actionButton svg {
+    width: 14px;
+    height: 14px;
+  }
+}

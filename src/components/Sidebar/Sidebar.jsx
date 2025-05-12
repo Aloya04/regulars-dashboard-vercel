@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   Menu,
   LayoutDashboard,
@@ -18,22 +19,30 @@ import RegularsLogo from "../../assets/regulars-logo.svg";
 import styles from "./Sidebar.module.css";
 
 function Sidebar({ isMenuOpen, setIsMenuOpen }) {
+  const location = useLocation();
+
   const menuItems = [
-    { icon: <LayoutDashboard />, text: "Overview", active: true },
-    { icon: <CreditCard />, text: "Loyalty Cards" },
-    { icon: <BarChart3 />, text: "Analytics" },
-    { icon: <Users />, text: "Members" },
-    { icon: <Bell />, text: "Push Notifications" },
-    { icon: <Mail />, text: "Mails" },
-    { icon: <Star />, text: "Feedback" },
+    { icon: <LayoutDashboard />, text: "Overview", path: "/" },
+    { icon: <CreditCard />, text: "Loyalty Cards", path: "/loyalty-cards" },
+    { icon: <BarChart3 />, text: "Analytics", path: "/analytics" },
+    { icon: <Users />, text: "Members", path: "/members" },
+    { icon: <Bell />, text: "Push Notifications", path: "/push-notifications" },
+    { icon: <Mail />, text: "Mails", path: "/mails" },
+    { icon: <Star />, text: "Feedback", path: "/feedback" },
   ];
 
   const bottomMenuItems = [
-    { icon: <Scan />, text: "Scanner" },
-    { icon: <Settings />, text: "Settings" },
-    { icon: <HelpCircle />, text: "Help Center" },
-    { icon: <User />, text: "My Profile" },
+    { icon: <Scan />, text: "Scanner", path: "/scanner" },
+    { icon: <Settings />, text: "Settings", path: "/settings" },
+    { icon: <HelpCircle />, text: "Help Center", path: "/help-center" },
+    { icon: <User />, text: "My Profile", path: "/profile" },
   ];
+
+  const handleLinkClick = () => {
+    if (window.innerWidth <= 768) {
+      setIsMenuOpen(false);
+    }
+  };
 
   return (
     <nav className={`${styles.sidebar} ${!isMenuOpen ? styles.menuClosed : ""}`}>
@@ -47,26 +56,35 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
         </div>
       </div>
 
-      <Menu onClick={() => setIsMenuOpen(!isMenuOpen)} />
-
       <div className={styles.menuItems}>
-        {menuItems.map((item, index) => (
-          <div
-            key={index}
-            className={`${styles.navItem} ${item.active ? styles.active : ""}`}
+        {menuItems.map((item) => (
+          <Link
+            to={item.path}
+            key={item.text}
+            className={`${styles.navItem} ${
+              location.pathname === item.path ? styles.active : ""
+            }`}
+            onClick={handleLinkClick}
           >
             {item.icon}
             <span>{item.text}</span>
-          </div>
+          </Link>
         ))}
       </div>
 
       <div className={styles.bottomMenu}>
-        {bottomMenuItems.map((item, index) => (
-          <div key={index} className={styles.navItem}>
+        {bottomMenuItems.map((item) => (
+          <Link
+            to={item.path}
+            key={item.text}
+            className={`${styles.navItem} ${
+              location.pathname === item.path ? styles.active : ""
+            }`}
+            onClick={handleLinkClick}
+          >
             {item.icon}
             <span>{item.text}</span>
-          </div>
+          </Link>
         ))}
       </div>
     </nav>

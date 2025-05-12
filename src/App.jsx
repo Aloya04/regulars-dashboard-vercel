@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom"; // Import Routes and Route
 import Sidebar from "./components/Sidebar/Sidebar";
 import Dashboard from "./components/Dashboard/Dashboard";
+import LoyaltyCardsPage from "./pages/LoyaltyCardsPage/LoyaltyCardsPage"; // Import the new page
 import styles from "./App.module.css";
 
 function App() {
-  const [isMenuOpen, setIsMenuOpen] = useState(true); // true = menu open, false = menu closed
+  const [isMenuOpen, setIsMenuOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -16,13 +18,17 @@ function App() {
   return (
     <div className={styles.appContainer}>
       <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-      {isMobile && (
+      {isMobile && isMenuOpen && ( // Show overlay only if menu is open on mobile
         <div
-          className={`${styles.overlay} ${isMenuOpen ? styles.overlayVisible : ""}`}
-          onClick={() => setIsMenuOpen(false)} // Close menu when overlay is clicked
+          className={`${styles.overlay} ${styles.overlayVisible}`}
+          onClick={() => setIsMenuOpen(false)}
         ></div>
       )}
-      <Dashboard isMenuOpen={isMenuOpen} />
+      <Routes>
+        <Route path="/" element={<Dashboard isMenuOpen={isMenuOpen} />} />
+        <Route path="/loyalty-cards" element={<LoyaltyCardsPage isMenuOpen={isMenuOpen} />} />
+        {/* Add other routes here */}
+      </Routes>
     </div>
   );
 }
