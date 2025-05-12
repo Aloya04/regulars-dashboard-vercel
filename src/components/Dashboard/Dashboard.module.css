@@ -51,4 +51,17 @@
     margin-left: 0; /* Sidebar might be hidden on mobile */
     
   }
+
+
+
+.dashboard.collapsed {
+  margin-left: 0px; /* Matches the collapsed sidebar width */
+  
+
 }
+.dashboard {
+max-width: calc(100% - 80px); /* Adjusted for mobile */
+}
+
+}
+
