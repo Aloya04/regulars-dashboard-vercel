@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bell as BellIcon, Search, Plus, Edit2, Copy, Trash2, Power } from 'lucide-react';
 import styles from './LoyaltyCardsPage.module.css';
 import NotificationModal from '../../components/NotificationModal/NotificationModal';
@@ -81,6 +81,10 @@ function LoyaltyCardsPage({ isMenuOpen }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [typeFilter, setTypeFilter] = useState('All');
+
+  useEffect(() => {
+    document.title = "Loyalty Cards - Regulars Dashboard";
+  }, []);
 
   const toggleNotificationModal = () => setIsNotificationModalOpen(!isNotificationModalOpen);
   const handleNotificationButtonMouseDown = (e) => e.stopPropagation();

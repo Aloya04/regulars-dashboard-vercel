@@ -1,6 +1,6 @@
 .sidebar {
   width: 306px;
-  background: var(--true-black);
+  background: var(--true-black-static); /* Changed to static black */
   transition: width 0.3s ease, padding 0.3s ease;
   padding: 36px 16px;
   display: flex;
@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 24px;
+  font-size: 1.5rem; /* Was 24px */
   font-weight: 600;
   margin-bottom: 40px;
   padding: 0 12px;
@@ -37,7 +37,7 @@
 }
 
 .collapseArrow {
-  color: var(--solid-white);
+  color: var(--solid-white-static); /* Changed to static white */
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -56,12 +56,12 @@
   display: flex;
   align-items: center;
   padding: 12px;
-  color: var(--solid-white);
+  color: var(--solid-white-static); /* Changed to static white */
   cursor: pointer;
   margin-bottom: 8px;
   border-radius: 8px;
   transition: background 0.3s ease;
-  font-size: 16px;
+  font-size: 1rem; /* Was 16px */
 }
 
 .navItem span,
@@ -74,18 +74,19 @@
 }
 
 .navItem:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1); /* This is fine as it's an overlay on black */
 }
 
 .navItem.active {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1); /* This is fine */
 }
 
 .navItem svg {
-  width: 24px;
-  height: 24px;
-  margin-right: 16px; /* Apply margin when not collapsed */
-  font-size: 20px;
+  width: 24px; /* Keep icon size fixed or use em if it should scale with text */
+  height: 24px; /* Keep icon size fixed or use em */
+  margin-right: 16px; 
+  /* SVG font-size was 20px, often not needed as size is controlled by width/height */
+  /* If you need to scale icons with font, consider using em for width/height too */
   transition: margin-right 0.3s ease, transform 0.3s ease;
 }
 .menuClosed .logoWrapper {
@@ -114,7 +115,7 @@
 
 .bottomMenu {
   margin-top: auto;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* This is fine */
   padding-top: 24px;
 }
 
@@ -139,11 +140,11 @@
   }
 
   .logo {
-    font-size: 20px; /* Reduce font size */
+    font-size: 1.25rem; /* Was 20px */
   }
 
   .navItem {
-    font-size: 14px; /* Reduce font size for menu items */
+    font-size: 0.875rem; /* Was 14px */
     padding: 8px; /* Reduce padding */
   }
 }
@@ -153,7 +154,7 @@
 @media screen and (max-width: 768px) {
   .sidebar {
   width: 306px;
-  background: var(--true-black);
+  background: var(--true-black-static); /* Changed to static black */
   transition: width 0.3s ease, padding 0.3s ease;
   padding: 36px 16px;
   display: flex;

@@ -1,5 +1,5 @@
-import React from "react";
-import { Users, Eye, Gift, DollarSign, Mail } from "lucide-react";
+import React, { useState, useEffect, useCallback } from "react";
+import { Users, Eye, Gift, Mail } from "lucide-react"; // Removed DollarSign as it's not used
 import {
   AreaChart,
   Area,
@@ -9,8 +9,57 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import styles from "./BentoGrid.module.css";
+import { accentPalettes, defaultChartColor, defaultAccentPaletteIndex } from '../../config/themeConfig'; // Import from shared config
 
 function BentoGrid({ bentoData }) {
+  const [currentChartColor, setCurrentChartColor] = useState(defaultChartColor);
+  const [currentAxisColor, setCurrentAxisColor] = useState('var(--text-secondary)');
+
+  // Function to update colors based on localStorage and current theme
+  const updateColors = useCallback(() => {
+    // Update Accent Color for the graph line
+    const storedPaletteIndex = localStorage.getItem('accentPaletteIndex');
+    const paletteIndex = storedPaletteIndex ? parseInt(storedPaletteIndex, 10) : defaultAccentPaletteIndex;
+    setCurrentChartColor(accentPalettes[paletteIndex]?.primary || defaultChartColor);
+
+    // Update Axis Color based on current theme CSS variable
+    const rootStyle = getComputedStyle(document.documentElement);
+    setCurrentAxisColor(rootStyle.getPropertyValue('--text-secondary').trim() || '#575757'); // Fallback for light
+  }, []);
+
+  useEffect(() => {
+    updateColors(); // Initial call to set colors
+
+    // Listener for localStorage changes (e.g., from another tab)
+    const handleStorageChange = (event) => {
+      if (event.key === 'accentPaletteIndex' || event.key === 'theme') {
+        updateColors();
+      }
+    };
+    const handleThemeChangedEvent = () => updateColors();
+    const handleAccentPaletteChangedEvent = () => updateColors();
+
+    window.addEventListener('storage', handleStorageChange);
+    document.addEventListener('themeChanged', handleThemeChangedEvent);
+    document.addEventListener('accentPaletteChanged', handleAccentPaletteChangedEvent);
+
+    // MutationObserver to catch direct body class changes (e.g., theme class)
+    const observer = new MutationObserver(updateColors);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      document.removeEventListener('themeChanged', handleThemeChangedEvent);
+      document.removeEventListener('accentPaletteChanged', handleAccentPaletteChangedEvent);
+      observer.disconnect();
+    };
+  }, [updateColors]);
+
+  // Re-fetch colors if bentoData itself changes, as it might be a full refresh
+  useEffect(() => {
+    updateColors();
+  }, [bentoData, updateColors]);
+
   if (!bentoData) {
     return <div>Loading data...</div>;
   }
@@ -20,6 +69,7 @@ function BentoGrid({ bentoData }) {
   return (
     <div className={styles.bentoContainer}>
       <div className={styles.leftSection}>
+        {/* ... statsGrid ... */}
         <div className={styles.statsGrid}>
           <div className={styles.card}>
             <div className={styles.stat}>
@@ -69,15 +119,41 @@ function BentoGrid({ bentoData }) {
           </div>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={graphData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
+              <XAxis
+                dataKey="name"
+                stroke={currentAxisColor} // Use state for axis color
+                tick={{ fontSize: '0.75rem', fill: currentAxisColor }} // Ensure tick fill also uses the color
+              />
+              <YAxis
+                stroke={currentAxisColor} // Use state for axis color
+                tick={{ fontSize: '0.75rem', fill: currentAxisColor }} // Ensure tick fill also uses the color
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'var(--background-primary)',
+                  borderColor: 'var(--border-color)',
+                  borderRadius: '8px',
+                  boxShadow: '0 2px 10px rgba(0,0,0,0.05)', // Softer shadow
+                }}
+                labelStyle={{
+                  color: 'var(--text-primary)', // Main text color for label
+                  fontWeight: 'bold',
+                  marginBottom: '4px',
+                }}
+                itemStyle={{ color: 'var(--text-primary)' }} // Main text color for items
+                cursor={{
+                  stroke: currentChartColor, // Cursor uses the graph line color
+                  strokeWidth: 1,
+                  strokeDasharray: '3 3',
+                }}
+              />
               <Area
                 type="monotone"
                 dataKey="value"
-                stroke="var(--loyal-blue)"
-                fill="var(--loyal-blue)"
-                fillOpacity={0.1}
+                stroke={currentChartColor} // Use state for line color
+                fill={currentChartColor}   // Use state for fill color
+                fillOpacity={0.1} // Keep fill light
+                strokeWidth={2}
               />
             </AreaChart>
           </ResponsiveContainer>
@@ -85,6 +161,7 @@ function BentoGrid({ bentoData }) {
       </div>
 
       <div className={styles.rightSection}>
+        {/* ... other cards ... */}
         <div className={styles.infoCard}>
           <h3>Inbox</h3>
           <div className={styles.infoContent}>

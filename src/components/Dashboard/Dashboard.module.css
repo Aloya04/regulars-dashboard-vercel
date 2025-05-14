@@ -34,7 +34,7 @@
 }
 
 .header h1 {
-  font-size: 36px; /* Adjusted font size */
+  font-size: 2.25rem; /* Was 36px */
   font-weight: 600;
 }
 
@@ -48,14 +48,14 @@
   border-radius: 8px;
   padding: 8px;
   cursor: pointer;
-  color: var(--true-black);
+  color: var(--text-primary); /* Changed from --true-black */
 }
 
 /* Responsive Design */
 /* Tablet (768px - 1024px) */
 @media screen and (max-width: 1024px) {
   .header h1 {
-    font-size: 28px; /* Smaller font size for tablets */
+    font-size: 1.75rem; /* Was 28px */
   }
 }
 
@@ -76,20 +76,20 @@
   }
 
   .header h1 {
-    font-size: 24px; /* Further reduce font size for mobile */
+    font-size: 1.5rem; /* Was 24px */
   }
 
   .stickyHeaderArea {
-  position: sticky;
-  top: 0; /* Sticks to the top of the .dashboard's content area */
-  padding-top: 0px; /* Replicate the dashboard's top padding inside sticky area */
-  margin: -4px -24px 0 -24px; /* Counteract dashboard padding to extend bg and shadow to edges */
-  padding-left: 24px; /* Restore padding for content */
-  padding-right: 24px; /* Restore padding for content */
-  background-color: var(--warm-welcome);
-  z-index: 10;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07); /* Subtle shadow */
-  padding-bottom: 16px; /* Space before the BentoGrid starts, shadow applies below this */
-}
+    position: sticky;
+    top: 0; /* Sticks to the top of the .dashboard's content area */
+    padding-top: 0px; /* Replicate the dashboard's top padding inside sticky area */
+    margin: -4px -24px 0 -24px; /* Counteract dashboard padding to extend bg and shadow to edges */
+    padding-left: 24px; /* Restore padding for content */
+    padding-right: 24px; /* Restore padding for content */
+    background-color: var(--warm-welcome);
+    z-index: 10;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07); /* Subtle shadow */
+    padding-bottom: 16px; /* Space before the BentoGrid starts, shadow applies below this */
+  }
 }
 

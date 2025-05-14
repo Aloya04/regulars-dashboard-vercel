@@ -19,6 +19,10 @@ function Dashboard({ isMenuOpen }) {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false); // State for modal
 
   useEffect(() => {
+    document.title = "Overview - Regulars Dashboard";
+  }, []);
+
+  useEffect(() => {
     console.log(`Filter changed to: ${activeFilter}. Updating data...`);
     if (activeFilter === "today") {
       setCurrentBentoData(mockDataToday);

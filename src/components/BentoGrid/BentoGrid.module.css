@@ -5,9 +5,10 @@
 .popularCard,
 .ratingCard,
 .chartCard {
-  background: var(--solid-white);
+  background: var(--background-primary); /* Use theme variable */
   border-radius: 30px;
   align-self: stretch; /* Ensure cards stretch to fill the row */
+  border: 1px solid var(--border-color); /* Add subtle border using theme variable */
 }
 
 /* Card padding variations */
@@ -42,13 +43,13 @@
 }
 
 .bentoContainer::-webkit-scrollbar-thumb {
-  background: var(--true-black);
+  background: var(--text-primary); /* Use theme variable */
   border-radius: 20px;
-  border: 2px solid var(--warm-welcome);
+  border: 2px solid var(--background-secondary); /* Use theme variable */
 }
 
 .bentoContainer::-webkit-scrollbar-thumb:hover {
-  background: rgba(5, 5, 5, 0.8);
+  background: var(--text-secondary); /* Use theme variable */
 }
 
 .leftSection,
@@ -72,10 +73,21 @@
 .popularCard h3,
 .ratingCard h3,
 .infoCard h3 {
-  font-size: 36px;
+  font-size: 2.25em; /* Use em */
   font-weight: 500;
-  color: var(--true-black);
+  color: var(--text-primary); /* Use theme variable */
   letter-spacing: -0.02em;
+}
+
+.salesHeader h2 {
+  font-size: 2rem; /* Was 32px */
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 80px; /* This might need to be relative too, e.g., 2.5em or 5rem, depending on desired fixed height vs. scaling */
+}
+
+.salesHeader h3 {
+  font-size: 1.5rem; /* Was 24px */
 }
 
 .grid {
@@ -96,9 +108,9 @@
 }
 
 .icon {
-  color: var(--true-black);
-  width: 24px;
-  height: 24px;
+  color: var(--text-primary); /* Use theme variable */
+  width: 1.5em; /* Use em */
+  height: 1.5em; /* Use em */
 }
 
 .stat {
@@ -120,15 +132,16 @@
 }
 
 .stat h3 {
-  font-size: 96px;
+  font-size: 6em; /* Use em */
   font-weight: 600;
   letter-spacing: -0.04em;
-  line-height: 80px;
+  line-height: 0.833em; /* Adjusted line height */
+  color: var(--text-primary); /* Use theme variable */
 }
 
 .stat p {
-  font-size: 24px;
-  color: var(--true-black);
+  font-size: 1.5em; /* Use em */
+  color: var(--text-primary); /* Use theme variable */
   font-weight: 500;
 }
 
@@ -138,7 +151,7 @@
 }
 
 .chartCard h3 {
-  color: var(--true-black);
+  color: var(--text-primary); /* Use theme variable */
   letter-spacing: -0.02em;
 }
 
@@ -159,9 +172,9 @@
 }
 
 .allTimeLabel {
-  font-size: 14px; /* Smaller font size */
-  font-weight: 400; /* Lighter font weight */
-  color: #666; /* Subtle color */
+  font-size: 0.875em; /* Use em */
+  font-weight: 400;
+  color: var(--text-secondary); /* Use theme variable */
   white-space: nowrap; /* Prevent wrapping */
 }
 
@@ -176,7 +189,7 @@
 }
 
 .popularItem span:last-child {
-  color: #666;
+  color: var(--text-secondary); /* Use theme variable */
 }
 
 .statsGrid {
@@ -189,18 +202,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 36px;
-  background: var(--light-green);
-  color: var(--green);
+  min-width: 60px; /* Ensure minimum width */
+  padding: 0.25em 0.75em; /* Use em for padding */
+  height: auto; /* Auto height */
+  background: var(--accent-secondary-light-green); /* Use theme variable */
+  color: var(--accent-secondary-green); /* Use theme variable */
   border-radius: 8px;
-  font-size: 24px;
+  font-size: 1.5em; /* Use em */
+  line-height: 1; /* Adjust line-height for badges */
 }
 
 .rating {
-  font-size: 64px;
+  font-size: 4em; /* Use em */
   font-weight: 600;
-  margin: 16px 0;
+  margin: 0.25em 0; /* Use em */
+  color: var(--text-primary); /* Use theme variable */
 }
 
 .salesCard {
@@ -212,17 +228,6 @@
   justify-content: space-between;
   align-items: top;
   margin-bottom: 24px;
-}
-
-.salesHeader h2 {
-  font-size: 32px; /* Adjusted font size */
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  line-height: 80px;
-}
-
-.salesHeader h3 {
-  font-size: 24px; /* Adjusted font size */
 }
 
 .salesAmount {
@@ -241,6 +246,11 @@
   .rightSection {
     gap: 24px;
   }
+
+  .bentoContainer {
+    grid-template-columns: 1fr; /* Maintain two-column layout */
+   
+  }
 }
 
 /* Tablet (768px - 1024px) */
@@ -249,6 +259,7 @@
     grid-template-columns: 1fr; /* Stack sections vertically */
     gap: 16px; /* Reduce gap */
     padding-right: 0; /* Remove padding if custom scrollbar is not desired/needed */
+    font-size: 0.9rem; /* Adjust base font for tablet if needed */
   }
   .bentoContainer::-webkit-scrollbar {
     display: none; /* Hide custom scrollbar on tablet and mobile */
@@ -275,20 +286,20 @@
   .popularCard h3,
   .ratingCard h3,
   .infoCard h3 {
-    font-size: 28px;
+    font-size: 1.75rem; /* Was 28px. 28/16 = 1.75rem. Or relative to 0.9rem base: 28/(16*0.9) = ~1.94em */
   }
 
   .stat h3 {
-    font-size: 64px;
-    line-height: 56px;
+    font-size: 4rem; /* Was 64px. 64/16 = 4rem */
+    line-height: 3.5rem; /* Was 56px. 56/16 = 3.5rem */
   }
 
   .stat p {
-    font-size: 18px;
+    font-size: 1.125rem; /* Was 18px. 18/16 = 1.125rem */
   }
 
   .salesHeader h2 {
-    font-size: 28px;
+    font-size: 1.75rem; /* Was 28px */
     line-height: 1.2; 
   }
 
@@ -296,18 +307,18 @@
     width: auto; /* Allow badge to size based on content */
     padding: 4px 8px;
     height: auto;
-    font-size: 16px;
+    font-size: 1.2em; /* Adjust badge font size for tablet */
   }
 
   .rating {
-    font-size: 48px;
+    font-size: 3rem; /* Was 48px. 48/16 = 3rem */
   }
   
   .allTimeLabel {
-    font-size: 13px;
+    font-size: 0.8125rem; /* Was 13px. 13/16 = 0.8125rem */
   }
   .popularItem span {
-    font-size: 15px;
+    font-size: 0.9375rem; /* Was 15px. 15/16 = 0.9375rem */
   }
 }
 
@@ -319,12 +330,13 @@
   }
   .bentoContainer {
     gap: 12px; /* Further reduce gap */
+    font-size: 0.85rem; /* Adjust base font for mobile if needed */
   }
 
   /* Custom scrollbar already hidden from tablet styles */
 
   .allTimeLabel {
-    font-size: 12px; 
+    font-size: 0.75rem; /* Was 12px. 12/16 = 0.75rem */
   }
 
   .card {
@@ -348,16 +360,16 @@
   .popularCard h3,
   .ratingCard h3,
   .infoCard h3 {
-    font-size: 20px;
+    font-size: 1.25rem; /* Was 20px. 20/16 = 1.25rem */
   }
 
   .stat h3 {
-    font-size: 48px;
-    line-height: 40px;
+    font-size: 3rem; /* Was 48px */
+    line-height: 2.5rem; /* Was 40px */
   }
 
   .stat p {
-    font-size: 14px;
+    font-size: 0.875rem; /* Was 14px */
   }
   .statHeader {
     gap: 8px; /* Reduce gap in stat header */
@@ -369,7 +381,7 @@
     gap: 8px; /* Space between title and amount block */
   }
   .salesHeader h2 {
-    font-size: 24px;
+    font-size: 1.5rem; /* Was 24px */
     line-height: 1.1;
   }
   .salesAmount {
@@ -379,16 +391,16 @@
   }
 
   .badge {
-    font-size: 12px;
+    font-size: 1em; /* Adjust badge font size for mobile */
     padding: 4px 6px;
   }
 
   .rating {
-    font-size: 36px;
+    font-size: 2.25rem; /* Was 36px */
   }
 
   .popularItem span {
-    font-size: 13px;
+    font-size: 0.8125rem; /* Was 13px */
   }
   .popularItem {
     padding: 6px 0;
@@ -397,31 +409,34 @@
 
 /* Small Mobile (below 376px) */
 @media screen and (max-width: 376px) {
+  .bentoContainer {
+    font-size: 0.8rem; /* Adjust base font for small mobile if needed */
+  }
   .salesHeader h3,
   .popularCard h3,
   .ratingCard h3,
   .infoCard h3 {
-    font-size: 18px; /* Even smaller for very small devices */
+    font-size: 1.125rem; /* Was 18px */
   }
   .stat h3 {
-    font-size: 40px;
-    line-height: 32px;
+    font-size: 2.5rem; /* Was 40px */
+    line-height: 2rem; /* Was 32px */
   }
   .stat p {
-    font-size: 12px;
+    font-size: 0.75rem; /* Was 12px */
   }
   .salesHeader h2 {
-    font-size: 20px;
+    font-size: 1.25rem; /* Was 20px */
   }
   .badge {
     font-size: 10px;
     padding: 3px 5px;
   }
   .rating {
-    font-size: 32px;
+    font-size: 2rem; /* Was 32px */
   }
   .popularItem span {
-    font-size: 12px;
+    font-size: 0.75rem; /* Was 12px */
   }
   .card, .salesCard, .infoCard, .popularCard, .ratingCard {
     padding: 12px; /* Minimal padding */

@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom"; // Import Routes and Route
 import Sidebar from "./components/Sidebar/Sidebar";
 import Dashboard from "./components/Dashboard/Dashboard";
 import LoyaltyCardsPage from "./pages/LoyaltyCardsPage/LoyaltyCardsPage"; // Import the new page
+import SettingsPage from "./pages/SettingsPage/SettingsPage"; // Import the new SettingsPage
+import AppearanceSettingsPage from "./pages/AppearanceSettingsPage/AppearanceSettingsPage"; // Import AppearanceSettingsPage
 import styles from "./App.module.css";
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Dashboard isMenuOpen={isMenuOpen} />} />
         <Route path="/loyalty-cards" element={<LoyaltyCardsPage isMenuOpen={isMenuOpen} />} />
+        <Route path="/settings" element={<SettingsPage isMenuOpen={isMenuOpen} />} /> {/* Add Settings route */}
+        <Route path="/settings/appearance" element={<AppearanceSettingsPage isMenuOpen={isMenuOpen} />} /> {/* Add Appearance Settings route */}
         {/* Add other routes here */}
       </Routes>
     </div>

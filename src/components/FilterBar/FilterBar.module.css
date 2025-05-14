@@ -11,10 +11,11 @@
   padding: 10px 16px; /* Adjusted padding */
   border-radius: 12px; /* Adjusted border radius */
   border: 2px solid transparent;
-  background: var(--solid-white);
+  background: var(--background-primary); /* Changed from --solid-white to be theme-aware */
+  color: var(--text-primary); /* Ensure text color is theme-aware */
   cursor: pointer;
   font-family: "Poppins", sans-serif;
-  font-size: 14px; /* Adjusted font size */
+  font-size: 0.875rem; /* Was 14px */
   font-weight: 500;
   transition: all 0.2s ease;
   text-align: center; /* Center text inside the button */
@@ -25,17 +26,20 @@
 }
 
 .filterBar button:hover {
-  border-color: var(--true-black);
+  border-color: var(--accent-primary); 
+  /* Consider a subtle background change on hover too if desired, e.g., var(--background-secondary) */
 }
 
 .filterBar button.active {
-  background: var(--true-black);
-  color: var(--solid-white);
+  background: var(--accent-primary);    /* Use theme's primary accent (now black/dark-grey) */
+  color: var(--solid-white-static);     /* Use static white for text for contrast */
   font-weight: 600;
+  border-color: var(--accent-primary); 
 }
 
 .filterBar button.active:hover {
-  border-color: var(--solid-white);
+  /* Optional: Slightly darken/lighten the accent color on hover for active button */
+  border-color: var(--accent-primary); 
 }
 
 .filters {
@@ -48,16 +52,16 @@
   padding: 8px 16px;
   border-radius: 8px;
   border: none;
-  background: var(--solid-white);
-  color: var(--true-black);
+  background: var(--background-primary); /* Changed from --solid-white */
+  color: var(--text-primary);          /* Ensure text color is theme-aware */
   font-family: "Poppins", sans-serif;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .filterButton.active {
-  background: var(--true-black);
-  color: var(--solid-white);
+  background: var(--accent-primary); 
+  color: var(--solid-white-static);    
 }
 
 .periodButton {
@@ -76,7 +80,7 @@
 /* Responsive Design */
 @media screen and (max-width: 1024px) {
   .filterBar button {
-    font-size: 12px; /* Smaller font size for tablets */
+    font-size: 0.75rem; /* Was 12px */
     padding: 8px 12px; /* Adjusted padding */
   }
 }
@@ -94,7 +98,7 @@
 
   .filterBar button {
     flex-grow: 1; /* Make buttons stretch to fill available space */
-    font-size: 14px; /* Adjust font size */
+    font-size: 0.875rem; /* Was 14px, consistent with base */
     padding: 10px 16px; /* Adjust padding */
   }
 }

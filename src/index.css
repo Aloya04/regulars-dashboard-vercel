@@ -1,10 +1,42 @@
 :root {
-  --true-black: #050505;
-  --solid-white: #ffffff;
-  --warm-welcome: #efe6dd;
-  --loyal-blue: #007aff;
-  --green: #1f4d0a;
-  --light-green: #b9e6c0;
+  /* Light Theme (Default) */
+  --text-primary: #050505;
+  --text-secondary: #575757;
+  --background-primary: #ffffff; /* Card backgrounds, modals */
+  --background-secondary: #efe6dd; /* Page background (Warm Welcome) */
+  --accent-primary: var(--true-black-static); /* Reverted to black for active elements */
+  --accent-secondary-green: #1f4d0a; /* Dark Green for badge text */
+  --accent-secondary-light-green: #b9e6c0; /* Light Green for badge background */
+  --border-color: #e0e0e0;
+  --true-black-static: #050505; /* Use this for elements always black */
+  --solid-white-static: #ffffff; /* For elements always white */
+  --warm-welcome-static: #efe6dd; /* Static warm welcome for specific uses */
+  --loyal-blue-static: #007AFF; /* This can remain if used elsewhere specifically as 'loyal blue' */
+  --green-static: #1f4d0a;
+  --light-green-static: #b9e6c0;
+
+  /* Font Sizes Values */
+  --font-size-small: 0.875rem; /* 14px */
+  --font-size-medium: 1rem;    /* 16px */
+  --font-size-large: 1.125rem; /* 18px */
+
+  /* Current Font Base - JS will update this */
+  --current-font-base: var(--font-size-medium); /* Default to medium */
+
+  /* Base font size application for the entire document (affects rem units) */
+  font-size: var(--current-font-base);
+  transition: font-size 0.3s ease; /* Smooth transition for font size changes */
+}
+
+body.dark-theme {
+  --text-primary: #EAEAEA;
+  --text-secondary: #B0B0B0;
+  --background-primary: #2C2C2C; /* Darker gray for cards */
+  --background-secondary: #1E1E1E; /* Very dark gray for page background */
+  --accent-primary: #383838; /* Dark grey for active elements in dark theme */
+  --accent-secondary-green: #6CC644; /* Muted green for badge text */
+  --accent-secondary-light-green: #375237; /* Dark, muted green for badge background */
+  --border-color: #4A4A4A;
 }
 
 * {
@@ -14,10 +46,11 @@
 }
 
 body {
-  background-color: var(--warm-welcome);
-  color: var(--true-black);
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
   font-family: "Poppins", sans-serif;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Removed font-size transition from body */
 }
 
 a {
@@ -36,6 +69,7 @@ h4,
 h5,
 h6 {
   letter-spacing: -0.02em;
+  color: var(--text-primary);
 }
 
 #root {
