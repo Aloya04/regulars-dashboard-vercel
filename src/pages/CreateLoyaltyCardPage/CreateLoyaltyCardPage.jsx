@@ -19,10 +19,10 @@ const cardTypeDetails = [
   { name: "Custom", displayName: "Custom", imageFileName: "custom.png" },
 ];
 
-// a small helper function to show an image for the card type picker.
+// a small helper function to show an image for the card type picker
 const renderPickerItem = (imageFileName, displayName) => {
-  // all our types should have an image, so we just show it.
-  return <img src={`/images/${imageFileName}`} alt={displayName} className={styles.pickerImage} />;
+  // all our types should have an image, so we just show it
+  return <img src={`/images/${imageFileName}`} alt={displayName} className={styles.pickerImage} loading="lazy" />;
 };
 
 
