@@ -24,7 +24,6 @@ const db = getFirestore(app);
 // this tries to enable offline persistence - means app can still work with some data even if the internet connection is lost.
 enableIndexedDbPersistence(db)
   .catch((err) => {
-    // if it fails, we're not logging detailed errors to the console anymore for simplicity.
     if (err.code === 'failed-precondition') {
       // this can happen if multiple tabs are open.
     } else if (err.code === 'unimplemented') {
