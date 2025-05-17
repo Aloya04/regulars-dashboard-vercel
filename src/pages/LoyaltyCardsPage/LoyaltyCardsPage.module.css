@@ -1,337 +1,413 @@
 .loyaltyCardsPage {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 24px;
-  margin-left: 306px;
-  transition: margin-left 0.3s ease, margin-right 0.3s ease;
-  background-color: var(--warm-welcome);
+  display: flex; /* enables flexbox layout. */
+  flex-direction: column; /* stacks child elements vertically. */
+  flex: 1; /* allows this element to grow and take available space. */
+  padding: 0 24px 24px 24px;
+  margin-left: 306px; 
+  transition: margin-left 0.3s ease, margin-right 0.3s ease; /* smooth transition for margin changes. */
+  background-color: var(--background-primary); 
   height: 100vh;
-  overflow-y: auto;
+  overflow-y: auto; /* allows vertical scrolling if content overflows. */
 }
 
 .loyaltyCardsPage.menuClosed {
-  margin-left: 80px;
+  margin-left: 80px; 
 }
 
 .stickyHeaderArea {
-  position: sticky;
+  position: sticky; /* makes this header stick to the top when scrolling. */
   top: 0;
-  padding-top: 24px;
-  margin: -24px -24px 0 -24px; /* Adjusted to cover full width */
-  padding-left: 24px;
-  padding-right: 24px;
-  background-color: var(--warm-welcome);
-  z-index: 10;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07);
-  padding-bottom: 16px;
+  margin: -24px -24px 0 -24px; 
+  padding-left: 24px; 
+  padding-right: 24px; 
+  background-color: var(--background-primary); 
+  z-index: 50; /* ensures it stays above other content during scroll. */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07); 
+  padding-bottom: 16px; 
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px; /* Space below header title */
+  display: flex; /* enables flexbox for the header. */
+  justify-content: space-between; /* spaces out title and notification button. */
+  align-items: center; /* vertically aligns items in the center. */
+  padding: 24px;
+  margin-inline: -24px; 
+  margin-bottom: 24px; 
+  background-color: var(--background-secondary); 
 }
 
 .header h1 {
-  font-size: 36px;
+  font-size: 2.25rem;
   font-weight: 600;
+  color: var(--text-primary);
 }
 
-.controlsHeader { /* New wrapper for CTA and filters */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 16px;
-  flex-wrap: wrap; /* Allow wrapping if space is tight */
-  gap: 16px; /* Gap between CTA and filter group */
+.notificationButtonWrapper {
+  position: relative; /* for positioning the notification modal. */
 }
 
-.createCardButton {
-  background-color: var(--loyal-blue);
-  color: var(--solid-white);
+.notificationBtn {
+  background: transparent;
   border: none;
-  border-radius: 8px; /* Consistent with filter buttons */
-  padding: 10px 16px; /* Consistent with filter buttons */
-  font-size: 14px; /* Consistent with filter buttons */
-  font-weight: 500;
+  border-radius: 8px;
+  padding: 0.5em;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.2s ease;
+  color: var(--text-primary);
+  display: flex; /* for centering the icon inside. */
+  align-items: center; 
+  justify-content: center; 
 }
 
-.createCardButton:hover {
-  background-color: #0056b3; /* Darker blue */
+.filterBarContainer {
+  display: flex; /* lays out filter controls in a row. */
+  align-items: center; 
+  gap: 12px; 
+  flex-wrap: wrap; /* allows filters to wrap on smaller screens. */
 }
 
-.filterControls {
-  display: flex;
-  align-items: center;
-  gap: 12px; /* Reduced gap */
-  flex-wrap: wrap; /* Allow filters to wrap if needed */
-}
-
-.filterControls span {
-  font-size: 14px;
-  color: #555;
+.filterLabel {
+  font-size: 1rem; 
+  color: var(--text-primary); 
+  font-weight: 600; 
+  margin-right: 4px; 
 }
 
 .filterDropdown {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: var(--solid-white);
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
+  padding: 12px 16px; 
+  padding-right: 36px; 
+  border-radius: 12px; 
+  border: 1px solid var(--background-secondary); 
+  background-color: var(--background-secondary); 
+  color: var(--text-primary); 
+  font-size: 0.9rem; 
+  font-weight: 500; 
+  outline: none;
+  appearance: none; /* removes default system appearance for select. */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%23050505' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); /* custom dropdown arrow. */
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  min-width: 100px; 
 }
 
-.searchContainer {
-  display: flex;
-  align-items: center;
-  background-color: var(--solid-white);
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 0 10px;
+.filterDropdown:hover {
+  border-color: var(--border-color); 
+}
+.filterDropdown:focus {
+  border-color: var(--loyal-blue-static); 
+}
+
+.searchInputContainer {
+  position: relative; /* for positioning the search icon. */
+  display: flex; 
+  align-items: center; 
+  flex-grow: 1; /* allows search input to take available space. */
+  max-width: 300px; 
 }
 
 .searchIcon {
-  color: #888;
-  margin-right: 8px;
+  position: absolute; /* positions search icon inside the input field. */
+  left: 16px; 
+  color: var(--text-secondary); 
+  pointer-events: none; /* allows clicks to pass through to the input. */
 }
 
 .searchInput {
-  border: none;
+  padding: 12px 16px; 
+  padding-left: 44px; 
+  border-radius: 12px; 
+  border: 1px solid var(--text-primary); 
+  background-color: var(--background-primary); 
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
   outline: none;
-  padding: 10px 0;
-  font-size: 14px;
-  font-family: "Poppins", sans-serif;
-  background-color: transparent;
+  width: 100%; 
+}
+.searchInput::placeholder {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+.searchInput:focus {
+  border-color: var(--loyal-blue-static);
 }
 
-.cardsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Reduced minmax */
-  gap: 20px; /* Reduced gap */
-  padding-top: 24px;
+.cardsDisplayArea {
+  display: grid; /* using css grid for card layout. */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* responsive columns for cards. */
+  justify-content: start; /* aligns grid items to the start. */
+  gap: 20px; 
+  padding-top: 24px; 
 }
 
-.cardContainer {
-  background-color: var(--solid-white);
-  border-radius: 12px; /* Slightly reduced radius */
-  padding: 16px; /* Reduced padding */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07); /* Softer shadow */
+.cardItem {
+  display: flex; /* using flexbox for internal card layout. */
+  flex-direction: column; /* stacks items vertically inside the card. */
+  align-items: center; /* centers items horizontally. */
+  padding: 20px; 
+  background-color: var(--background-primary);
+  border-radius: 20px; 
+  gap: 12px; 
 }
 
 .cardTitle {
-  font-size: 16px; /* Reduced font size */
+  font-size: 1.5rem; 
   font-weight: 600;
-  margin-bottom: 12px; /* Reduced margin */
-  color: var(--true-black);
-  text-align: center;
+  color: var(--text-primary);
+  text-align: center; 
+  width: 100%; 
+  margin-bottom: 4px; 
 }
 
-.phoneMockup {
-  width: 150px; /* Reduced width */
-  height: 260px; /* Reduced height */
-  border: 6px solid var(--true-black); /* Thinner border */
-  border-radius: 25px; /* Adjusted radius */
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 16px; /* Reduced margin */
-  overflow: hidden;
+.phoneImageContainer {
+  position: relative; /* for positioning the overlay icon. */
+  width: 180px; 
+  min-height: 250px; 
+  display: flex; /* for centering the phone image. */
+  justify-content: center; 
+  align-items: center; 
+  background-color: transparent; 
+  border-radius: 28px; 
+  padding: 15px; 
+  overflow: hidden; 
 }
 
-.phoneScreen {
+.phoneImage {
   width: 100%;
-  height: 100%;
-  background-color: var(--warm-welcome); /* Inner screen color */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--true-black);
+  height: 100%; 
+  object-fit: contain; /* ensures phone image scales nicely. */
+  position: relative; 
+  z-index: 3; /* phone bezel on top of the screen content. */
 }
 
-.cardIconCustom {
-  width: 50px; /* Reduced size */
-  height: 50px; /* Reduced size */
+.overlayIconContainer {
+  position: absolute; /* positions the card's main icon/image in the center of the phone screen. */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* precise centering trick. */
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background-color: var(--background-secondary); 
+  width: calc(100% - 40px); 
+  height: calc(100% - 70px); 
+  max-width: 110px; 
+  max-height: 150px; 
+  border-radius: 18px; 
+  z-index: 2; /* screen content below the phone bezel. */
+  overflow: hidden; 
 }
 
-.ctaButton {
-  background-color: var(--loyal-blue);
-  color: var(--solid-white);
-  border: none;
-  border-radius: 16px; /* Adjusted radius */
-  padding: 10px 20px; /* Reduced padding */
-  font-size: 14px; /* Reduced font size */
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  width: 100%;
-  max-width: 180px; /* Adjusted max-width */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+.overlayImageActual { 
+  max-width: 80%; 
+  max-height: 80%; 
+  object-fit: contain; /* ensures the overlay image scales nicely. */
 }
 
-.ctaButton.createButton {
-  background-color: var(--loyal-blue);
-}
-
-.ctaButton:hover {
-  background-color: #0056b3; /* Darker blue */
-}
-
-.tagsContainer {
-  display: flex;
-  gap: 6px; /* Reduced gap */
-  margin-top: 12px; /* Reduced margin */
-  width: 100%;
-  justify-content: center;
-}
-
-.tag {
-  font-size: 11px; /* Reduced font size */
-  padding: 3px 8px; /* Reduced padding */
-  border-radius: 12px; /* Pill shape */
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.activeTag {
-  background-color: var(--light-green);
-  color: var(--green);
-}
-
-.inactiveTag {
-  background-color: #ffe0e0; /* Light red */
-  color: #c0392b; /* Dark red */
-}
-
-.statusDot {
-  width: 6px; /* Reduced size */
-  height: 6px; /* Reduced size */
-  border-radius: 50%;
-  background-color: currentColor; /* Uses the tag's text color */
-}
-
-.typeTag {
-  background-color: #e0e7ff; /* Light blue/purple */
-  color: #4a55c7; /* Darker blue/purple */
-}
-
-.actionButtons {
-  display: flex;
-  gap: 8px; /* Reduced gap */
-  margin-top: 16px; /* Reduced margin */
-  width: 100%;
-  justify-content: center;
+.actionButtonImage { 
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* for small images inside buttons, if used. */
 }
 
 .actionButton {
-  background: transparent;
-  border: 1px solid #e0e0e0; /* Lighter border */
-  border-radius: 6px; /* Adjusted radius */
-  padding: 6px; /* Reduced padding */
+  padding: 12px 20px; 
+  border-radius: 100px; 
+  border: none;
+  font-size: 0.875rem; 
+  font-weight: 600;
   cursor: pointer;
-  color: #555;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease; /* smooth transition for hover. */
+  width: 90%; 
+  max-width: 220px; 
+  display: flex; /* for aligning icon and text in button. */
+  align-items: center; 
+  justify-content: center; 
+  gap: 8px; 
 }
 
-.actionButton svg { /* Ensure icons inside buttons are not too large */
-  width: 16px;
-  height: 16px;
+.buttonIconWrapper { 
+  display: flex; /* for centering the icon within its wrapper. */
+  align-items: center; 
+  justify-content: center; 
 }
 
-.actionButton:hover {
-  background-color: #f0f0f0;
-  color: var(--true-black);
+.primaryButton {
+  background-color: var(--loyal-blue-static); 
+  color: var(--solid-white-static);
 }
 
-.noCardsMessage { /* Style for the message when no cards are shown */
-  grid-column: 1 / -1; /* Span all columns */
-  text-align: center;
-  padding: 40px 20px;
-  color: #777;
-  font-size: 16px;
+.primaryButton:hover {
+  background-color: #005bb5; 
 }
 
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
+.secondaryButton {
+  background-color: var(--loyal-blue-static); 
+  color: var(--solid-white-static);
+}
+.secondaryButton:hover {
+  background-color: #005bb5; 
+}
+
+.statusTags {
+  display: flex; /* lays out tags in a row. */
+  gap: 8px;
+  flex-wrap: wrap; /* allows tags to wrap if many. */
+  justify-content: center; /* centers tags if they wrap. */
+}
+
+.statusTag {
+  padding: 5px 12px; 
+  border-radius: 14px; 
+  font-size: 0.7rem; 
+  font-weight: 500;
+  display: flex; /* for aligning dot and text. */
+  align-items: center; 
+  gap: 4px;
+}
+
+.statusTag::before { /* the small dot for active/inactive tags. */
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.activeTag {
+  background-color: var(--accent-secondary-light-green);
+  color: var(--accent-secondary-green);
+}
+.activeTag::before {
+  background-color: var(--accent-secondary-green);
+}
+
+.inactiveTag {
+  background-color: #FFD6D3; 
+  color: #D32F2F; 
+}
+.inactiveTag::before {
+  background-color: #D32F2F;
+}
+
+.typeTag { 
+  background-color: var(--background-secondary); 
+  color: var(--text-primary); 
+}
+.typeTag::before {
+  display: none; /* type tags don't have a dot. */
+}
+
+.actionIcons {
+  display: flex; /* lays out action icons in a row. */
+  gap: 12px; 
+  margin-top: auto; /* pushes icons to the bottom of the card if there's extra space. */
+}
+
+.iconButton {
+  background-color: var(--background-secondary); 
+  border: 1px solid var(--border-color); 
+  color: var(--text-primary); 
+  width: 36px; 
+  height: 36px; 
+  border-radius: 8px; 
+  padding: 0; 
+  cursor: pointer;
+  display: flex; /* for centering the icon inside. */
+  align-items: center; 
+  justify-content: center; 
+  transition: background-color 0.2s ease, color 0.2s ease; /* smooth transition for hover. */
+}
+
+.iconButton svg { 
+  width: 18px; 
+  height: 18px; 
+}
+
+.iconButton:hover {
+  background-color: var(--border-color); 
+  color: var(--text-primary);
+}
+
+/* responsive design */
+@media screen and (max-width: 1024px) { /* tablet */
+  .cardsDisplayArea {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .cardItem {
+    padding: 16px;
+    gap: 12px;
+  }
+  .cardTitle {
+    font-size: 1.35rem;
+  }
+  .phoneImageContainer {
+    width: 160px;
+    min-height: 220px;
+  }
+  .overlayIconContainer {
+    max-width: 100px;
+    max-height: 140px;
+  }
+  .actionButton {
+    font-size: 0.8rem;
+    padding: 10px 18px;
+  }
+}
+
+
+@media screen and (max-width: 768px) { /* mobile */
   .loyaltyCardsPage {
     margin-left: 0;
-    margin-right: 60px; 
+    margin-right: 60px; /* adjust for mobile sidebar behavior. */
   }
   .loyaltyCardsPage.menuClosed {
-    margin-right: 60px; /* Keep this if sidebar is fixed on right */
+    margin-right: 60px;
+    margin-left: 0;
   }
   .header h1 {
-    font-size: 24px; /* Adjusted from 28px */
+    font-size: 1.75rem;
   }
-  .controlsHeader { /* Adjust controls header for mobile */
-    flex-direction: column;
-    align-items: stretch;
+  .filterBarContainer {
+    flex-direction: column; /* stack filter controls vertically. */
+    align-items: stretch; /* make them full width. */
+    gap: 12px; 
   }
-  .createCardButton {
-    width: 100%; /* Make CTA full width on mobile */
-    margin-bottom: 12px; /* Space below CTA */
+  .filterLabel {
+    margin-bottom: 4px; 
+    text-align: left;
+    width: 100%;
   }
-  .filterControls {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%; /* Make filter group full width */
+  .filterDropdown {
+    width: 100%; 
   }
-  .filterDropdown, .searchContainer {
-    width: 100%; /* Make individual filter elements full width */
+  .searchInputContainer {
+    max-width: none; 
+    width: 100%;
   }
   .searchInput {
     width: 100%;
   }
-  .cardsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Further adjust for mobile */
-    gap: 16px;
+  .cardsDisplayArea {
+    grid-template-columns: 1fr; /* stack cards in a single column. */
+    gap: 16px; 
   }
-  .cardContainer {
-    padding: 12px;
-  }
+
   .cardTitle {
-    font-size: 14px;
+    font-size: 1.25rem; 
   }
-  .phoneMockup {
-    width: 120px;
-    height: 200px;
-    border-width: 5px;
-    border-radius: 20px;
+  .phoneImageContainer {
+    width: 150px; 
+    min-height: 200px; 
   }
-  .cardIconCustom {
-    width: 40px;
-    height: 40px;
+   .overlayIconContainer {
+    max-width: 90px;
+    max-height: 130px;
   }
-  .ctaButton {
-    font-size: 13px;
-    padding: 8px 16px;
-  }
-  .tag {
-    font-size: 10px;
-    padding: 2px 6px;
-  }
-  .actionButton {
-    padding: 5px;
-  }
-  .actionButton svg {
-    width: 14px;
-    height: 14px;
+  .stickyHeaderArea {
+     padding-top: 0px; 
   }
 }

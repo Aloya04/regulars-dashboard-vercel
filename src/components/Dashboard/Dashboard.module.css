@@ -1,45 +1,52 @@
 .dashboard {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 24px;
-  margin-left: 306px; /* Matches the expanded sidebar width */
-  transition: margin-left 0.3s ease, margin-right 0.3s ease; /* Updated transition */
+  display: flex; /* enables flexbox layout for this container. */
+  flex-direction: column; /* stacks child elements vertically. */
+  flex: 1; /* allows this element to grow and take available space in its parent flex container. */
+  padding: 0 24px 24px 24px;
+  margin-left: 306px; 
+  transition: margin-left 0.3s ease, margin-right 0.3s ease; /* smooth transition for margin changes. */
   background-color: var(--warm-welcome);
-  height: 100vh; /* Full viewport height */
-  overflow-y: auto; /* Allow vertical scrolling for content below sticky header */
+  height: 100vh; 
+  overflow-y: auto; /* allows vertical scrolling if content overflows. */
 }
 
 .dashboard.menuClosed {
-  margin-left: 80px; /* Matches the closed sidebar width */
+  margin-left: 80px; 
 }
 
 .stickyHeaderArea {
-  position: sticky;
-  top: 0; /* Sticks to the top of the .dashboard's content area */
-  padding-top: 24px; /* Replicate the dashboard's top padding inside sticky area */
-  margin: -4px -24px 0 -24px; /* Counteract dashboard padding to extend bg and shadow to edges */
-  padding-left: 24px; /* Restore padding for content */
-  padding-right: 24px; /* Restore padding for content */
-  background-color: var(--warm-welcome);
-  z-index: 10;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07); /* Subtle shadow */
-  padding-bottom: 16px; /* Space before the BentoGrid starts, shadow applies below this */
+  position: sticky; /* makes this header stick to the top when scrolling. */
+  z-index: 10; /* ensures it stays above other content during scroll, but below modals. */
+  top: 0; 
+  padding-top: 24px; 
+  margin: -4px -24px 0 -24px; 
+  padding-left: 24px; 
+  padding-right: 24px; 
+  background-color: var(--background-secondary);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07); 
+  padding-bottom: 16px; 
+}
+.recharts-wrapper {
+  /* this was added to fix a bug where the chart tooltip would be cut off.
+     making its position static ensures it's part of the normal document flow
+     and not creating a new stacking context that could hide the tooltip. */
+  position: static;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; /* enables flexbox for the header. */
+  justify-content: space-between; /* spaces out the title and notification button. */
+  align-items: center; /* vertically aligns items in the center. */
+  margin-bottom: 24px;
 }
 
 .header h1 {
-  font-size: 2.25rem; /* Was 36px */
+  font-size: 2.25rem; 
   font-weight: 600;
 }
 
-.notificationButtonWrapper { /* New style */
-  position: relative; /* For positioning the dropdown */
+.notificationButtonWrapper { 
+  position: relative; /* for positioning the notification modal dropdown. */
 }
 
 .notificationBtn {
@@ -48,48 +55,93 @@
   border-radius: 8px;
   padding: 8px;
   cursor: pointer;
-  color: var(--text-primary); /* Changed from --true-black */
+  color: var(--text-primary); 
 }
 
-/* Responsive Design */
-/* Tablet (768px - 1024px) */
-@media screen and (max-width: 1024px) {
-  .header h1 {
-    font-size: 1.75rem; /* Was 28px */
+/* transition effect for content appearing/disappearing. */
+.contentTransitionWrapper {
+  opacity: 0;
+  visibility: hidden; 
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* fade out, then hide. */
+}
+
+.contentTransitionWrapper.contentVisible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0s; /* show, then fade in. */
+}
+
+.messageContainer {
+  padding: 20px;
+  text-align: center;
+  animation: fadeInMessage 0.5s ease-in-out forwards; /* animation for messages appearing. */
+}
+
+/* defines the 'fadeinmessage' animation. */
+@keyframes fadeInMessage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
-/* Mobile (below 768px) */
+/* responsive design */
+@media screen and (max-width: 1024px) {
+  .header h1 {
+    font-size: 1.75rem; 
+  }
+  .recharts-wrapper {
+    position: static; /* ensure consistency for responsive chart behavior. */
+  }
+  .stickyHeaderArea {
+    z-index: 10; /* maintain sticky header z-index. */
+  }
+}
+
 @media screen and (max-width: 768px) {
   .dashboard {
     margin-left: 0;
-    max-width: calc(100% - 60px); /* Ensure it doesn't overflow the screen */
-    margin-right: 50px; /* Default: menu open, sidebar overlays content */
-    width: auto; /* Let flexbox determine width */
-    /* transition for margin-right is inherited from .dashboard main style */
+    max-width: calc(100% - 60px); 
+    margin-right: 50px; 
+    width: auto; 
+  }
+  .recharts-wrapper {
+    position: static; /* ensure consistency for responsive chart behavior. */
   }
 
   .dashboard.menuClosed {
-    /* When sidebar is CLOSED (80px wide) */
     margin-right: 60px; 
     margin-left: 0; 
   }
 
   .header h1 {
-    font-size: 1.5rem; /* Was 24px */
+    font-size: 1.5rem; 
   }
 
   .stickyHeaderArea {
-    position: sticky;
-    top: 0; /* Sticks to the top of the .dashboard's content area */
-    padding-top: 0px; /* Replicate the dashboard's top padding inside sticky area */
-    margin: -4px -24px 0 -24px; /* Counteract dashboard padding to extend bg and shadow to edges */
-    padding-left: 24px; /* Restore padding for content */
-    padding-right: 24px; /* Restore padding for content */
-    background-color: var(--warm-welcome);
-    z-index: 10;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07); /* Subtle shadow */
-    padding-bottom: 16px; /* Space before the BentoGrid starts, shadow applies below this */
+    position: sticky; /* ensure header sticks on mobile. */
+    top: 0; 
+    padding-top: 0px; 
+    margin: -4px -24px 0 -24px; 
+    padding-left: 24px; 
+    padding-right: 24px; 
+    z-index: 10; /* maintain sticky header z-index. */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.07); 
+    padding-bottom: 16px; 
+  }
+  .header {
+    display: flex; /* ensure header items are laid out with flexbox. */
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 24px 24px 0 24px;
+    margin-inline: -24px;
+    margin-bottom: 0px;
+    background-color: var(--background-secondary);
+  }
+  .header h1{
+    font-size: 28px;
   }
 }
 

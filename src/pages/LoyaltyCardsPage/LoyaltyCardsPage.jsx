@@ -1,174 +1,396 @@
-import React, { useState, useEffect } from 'react';
-import { Bell as BellIcon, Search, Plus, Edit2, Copy, Trash2, Power } from 'lucide-react';
+import  { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import { 
+  Bell as BellIcon, Search, Plus, Power, Edit2, Copy as CopyIcon, Trash2,
+  CreditCard 
+} from 'lucide-react';
 import styles from './LoyaltyCardsPage.module.css';
 import NotificationModal from '../../components/NotificationModal/NotificationModal';
+import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal';
+import { getLoyaltyCards, updateLoyaltyCardStatus, deleteLoyaltyCard } from '../../services/loyaltyCardService';
 
-// Mock data for cards
-const initialCardsData = [
-  {
-    id: 'stamp-card-1',
-    title: 'Stamp Card',
-    iconType: 'stamp',
-    status: 'Active',
-    type: 'Stamp',
-  },
-  {
-    id: 'membership-card-1',
-    title: 'Membership',
-    iconType: 'membership',
-    status: 'Inactive',
-    type: 'Membership',
-  },
-  {
-    id: 'stamp-card-2',
-    title: 'Coffee Rewards',
-    iconType: 'stamp',
-    status: 'Active',
-    type: 'Stamp',
-  },
-  {
-    id: 'membership-card-2',
-    title: 'VIP Club',
-    iconType: 'membership',
-    status: 'Active',
-    type: 'Membership',
-  },
-];
-
-// Reusable Card Component
-const LoyaltyCard = ({ card, onDeleteCard }) => {
-  const getIcon = () => {
-    if (card.iconType === 'stamp') return <img src="/stamp-icon.svg" alt="Stamp" className={styles.cardIconCustom} />;
-    if (card.iconType === 'membership') return <img src="/membership-icon.svg" alt="Membership" className={styles.cardIconCustom} />;
-    return null;
-  };
-
-  return (
-    <div className={styles.cardContainer}>
-      <h3 className={styles.cardTitle}>{card.title}</h3>
-      <div className={styles.phoneMockup}>
-        <div className={styles.phoneScreen}>
-          {getIcon()}
-        </div>
-      </div>
-      <button
-        className={styles.ctaButton}
-        onClick={() => console.log('View card:', card.id)}
-      >
-        View card
-      </button>
-      <div className={styles.tagsContainer}>
-        <span className={`${styles.tag} ${card.status === 'Active' ? styles.activeTag : styles.inactiveTag}`}>
-          <span className={styles.statusDot}></span>{card.status}
-        </span>
-        <span className={`${styles.tag} ${styles.typeTag}`}>{card.type}</span>
-      </div>
-      <div className={styles.actionButtons}>
-        <button className={styles.actionButton} title={card.status === 'Active' ? "Disable" : "Enable"}><Power size={18} /></button>
-        <button className={styles.actionButton} title="Edit"><Edit2 size={18} /></button>
-        <button className={styles.actionButton} title="Copy"><Copy size={18} /></button>
-        <button className={styles.actionButton} title="Delete" onClick={() => onDeleteCard(card.id)}>
-          <Trash2 size={18} />
-        </button>
-      </div>
-    </div>
-  );
+// a simple map to get lucide icon components by name.
+// mainly for action buttons or if an image name isn't found.
+const iconMap = {
+  Plus: (props) => <Plus {...props} />,
+  Power: (props) => <Power {...props} />,
+  Edit2: (props) => <Edit2 {...props} />,
+  Copy: (props) => <CopyIcon {...props} />,
+  Trash2: (props) => <Trash2 {...props} />,
+  CreditCard: (props) => <CreditCard {...props} />, 
 };
 
-function LoyaltyCardsPage({ isMenuOpen }) {
+// this is our main component for the loyalty cards page.
+// 'isMenuOpen' tells if the sidebar is open.
+// 'addToast' is a function to show pop-up messages.
+const LoyaltyCardsPage = ({ isMenuOpen, addToast }) => {
+  const navigate = useNavigate(); // for changing pages.
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
-  const [cards, setCards] = useState(initialCardsData);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('All');
-  const [typeFilter, setTypeFilter] = useState('All');
+  const [allCards, setAllCards] = useState([]); // holds all cards fetched from the database.
+  const [displayedCards, setDisplayedCards] = useState([]); // cards currently shown after filtering.
 
+  // state for filter inputs.
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
+
+  // state for the delete confirmation pop-up.
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [cardToDeleteId, setCardToDeleteId] = useState(null);
+  const [cardToDeleteTitle, setCardToDeleteTitle] = useState('');
+
+  // state for the status toggle confirmation pop-up.
+  const [showStatusToggleModal, setShowStatusToggleModal] = useState(false);
+  const [cardToToggleStatus, setCardToToggleStatus] = useState(null); // stores { id, currentStatus, title }.
+
+
+  const [isLoading, setIsLoading] = useState(true); // true when loading cards.
+
+  // function to get all cards from the database.
+  const fetchCards = async () => {
+    setIsLoading(true);
+    try {
+      const fetchedCards = await getLoyaltyCards();
+      setAllCards(fetchedCards);
+    } catch (error) {
+      // if fetching fails, we could show an error to the user.
+      // for now, it's simplified and doesn't log to console.
+      addToast({ type: 'error', message: 'Could not load loyalty cards.' });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // this 'useEffect' runs once when the page loads.
   useEffect(() => {
-    document.title = "Loyalty Cards - Regulars Dashboard";
-  }, []);
+    document.title = "Loyalty Cards - Regulars Dashboard"; // set the browser tab title.
+    fetchCards(); // get the cards.
+  }, []); // empty array means it only runs on mount.
+
+  // this 'useEffect' runs whenever filters or the main card list changes.
+  // it updates which cards are displayed.
+  useEffect(() => {
+    let filtered = [...allCards]; // start with all cards.
+
+    // apply search filter.
+    if (searchTerm) {
+      filtered = filtered.filter(card =>
+        card.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    // apply status filter.
+    if (statusFilter) {
+      filtered = filtered.filter(card => card.status === statusFilter);
+    }
+    // apply type filter.
+    if (typeFilter) {
+      filtered = filtered.filter(card => card.cardType === typeFilter);
+    }
+
+    // add a special "create card" placeholder at the beginning of the list.
+    const createCardPlaceholder = {
+      id: 'create',
+      title: 'Create Card',
+      phoneImage: '/images/phone.png',
+      overlayIconName: 'Plus', // uses the plus icon.
+      buttonText: 'Create',
+      buttonType: 'primary',
+      buttonIconName: 'Plus',
+      isPlaceholder: true, // marks this as the placeholder.
+    };
+    setDisplayedCards([createCardPlaceholder, ...filtered]);
+  }, [searchTerm, statusFilter, typeFilter, allCards]); // re-run if these change.
 
   const toggleNotificationModal = () => setIsNotificationModalOpen(!isNotificationModalOpen);
-  const handleNotificationButtonMouseDown = (e) => e.stopPropagation();
+  const handleNotificationButtonMouseDown = (e) => e.stopPropagation(); // prevents modal from closing immediately.
 
-  const handleCreateCard = () => {
-    console.log('Create new card button clicked');
-    const newCardId = `new-card-${Date.now()}`;
-    const newCard = {
-        id: newCardId,
-        title: 'New Loyalty Card',
-        iconType: Math.random() > 0.5 ? 'stamp' : 'membership',
-        status: 'Inactive',
-        type: Math.random() > 0.5 ? 'Stamp' : 'Membership',
-    };
-    setCards(prevCards => [newCard, ...prevCards]);
+  // update state when filter inputs change.
+  const handleSearchChange = (event) => setSearchTerm(event.target.value);
+  const handleStatusFilterChange = (event) => setStatusFilter(event.target.value);
+  const handleTypeFilterChange = (event) => setTypeFilter(event.target.value);
+
+  // --- status toggle logic ---
+  // opens the confirmation pop-up for changing a card's status.
+  const handleOpenStatusToggleModal = (cardId, currentStatus, cardTitle) => {
+    setCardToToggleStatus({ id: cardId, currentStatus, title: cardTitle });
+    setShowStatusToggleModal(true);
   };
 
-  const handleDeleteCard = (cardId) => {
-    setCards(prevCards => prevCards.filter(card => card.id !== cardId));
+  // called when user confirms changing the status.
+  const handleConfirmStatusToggle = async () => {
+    if (!cardToToggleStatus) return;
+    const { id, currentStatus, title } = cardToToggleStatus;
+    const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+    try {
+      await updateLoyaltyCardStatus(id, newStatus);
+      // update the card in our local list.
+      setAllCards(prevCards =>
+        prevCards.map(card =>
+          card.id === id ? { ...card, status: newStatus } : card
+        )
+      );
+      addToast({ type: 'success', title: 'Status Updated', message: `Card "${title}" is now ${newStatus}.` });
+    } catch (error) {
+      addToast({ type: 'error', title: 'Error', message: 'Failed to update card status.' });
+    }
+    setShowStatusToggleModal(false); // close the pop-up.
+    setCardToToggleStatus(null); // clear the stored card info.
   };
 
-  const filteredCards = cards.filter(card => {
-    const matchesSearch = card.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'All' || card.status === statusFilter;
-    const matchesType = typeFilter === 'All' || card.type === typeFilter;
-    return matchesSearch && matchesStatus && matchesType;
-  });
+  // called when user cancels changing the status.
+  const handleCancelStatusToggle = () => {
+    setShowStatusToggleModal(false);
+    setCardToToggleStatus(null);
+  };
 
+  // --- delete logic ---
+  // opens the confirmation pop-up for deleting a card.
+  const handleOpenDeleteModal = (cardId, cardTitle) => {
+    setCardToDeleteId(cardId);
+    setCardToDeleteTitle(cardTitle);
+    setShowDeleteModal(true);
+  };
+
+  // called when user confirms deleting the card.
+  const handleConfirmDelete = async () => {
+    if (cardToDeleteId) {
+      try {
+        await deleteLoyaltyCard(cardToDeleteId);
+        // remove the card from our local list.
+        setAllCards(prevCards => prevCards.filter(card => card.id !== cardToDeleteId));
+        addToast({ type: 'success', title: 'Success', message: `Card "${cardToDeleteTitle}" successfully deleted.` });
+      } catch (error) {
+        addToast({ type: 'error', title: 'Error', message: 'Failed to delete card.' });
+      }
+    }
+    setShowDeleteModal(false); // close the pop-up.
+    setCardToDeleteId(null); // clear stored card id.
+    setCardToDeleteTitle(''); // clear stored card title.
+  };
+
+  // called when user cancels deleting the card.
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+    setCardToDeleteId(null);
+    setCardToDeleteTitle('');
+  };
+  
+  // creates a list of status tags (like "active", "stamp") for a card.
+  const generateStatusTags = (card) => {
+    if (card.isPlaceholder) return []; // no tags for the placeholder.
+    const tags = [];
+    if (card.status) {
+      tags.push({ text: card.status.charAt(0).toUpperCase() + card.status.slice(1), type: card.status });
+    }
+    if (card.cardType) {
+      tags.push({ text: card.cardType, type: 'type' });
+    }
+    return tags;
+  };
+  
+  // creates a list of action icons (like edit, delete) for a card.
+  const generateActionIcons = (card) => {
+    if (card.isPlaceholder) return []; // no actions for the placeholder.
+    return [
+      { id: 'power', iconName: 'Power', label: 'Toggle Status', action: () => handleOpenStatusToggleModal(card.id, card.status, card.title) },
+      { id: 'edit', iconName: 'Edit2', label: 'Edit Card', action: () => navigate(`/loyalty-cards/edit/${card.id}`) },
+      { id: 'copy', iconName: 'Copy', label: 'Duplicate Card', action: () => {
+          addToast({type: 'info', title: 'Coming Soon', message: 'Duplicate feature will be available later.'});
+        } 
+      },
+      { id: 'delete', iconName: 'Trash2', label: 'Delete Card', action: () => handleOpenDeleteModal(card.id, card.title) },
+    ];
+  };
+
+  // decides whether to show an image or a lucide icon.
+  const renderIcon = (iconName, props = { size: 18 }, isOverlay = false) => {
+    // if iconName looks like an image file (e.g., ends with .png).
+    if (iconName && typeof iconName === 'string' && iconName.endsWith('.png')) {
+      const imageProps = isOverlay 
+        ? { className: styles.overlayImageActual, style: { width: props.size || 72, height: props.size || 72 } } 
+        : { className: styles.actionButtonImage, style: { width: props.size || 18, height: props.size || 18 } }; 
+      return <img src={`/images/${iconName}`} alt={iconName.replace('.png', '')} {...imageProps} />;
+    }
+
+    // otherwise, try to render a lucide icon from our map.
+    const IconComponent = iconMap[iconName];
+    // icons in buttons are decorative (aria-hidden) because the button itself has a label.
+    return IconComponent ? <IconComponent {...props} aria-hidden="true" /> : <CreditCard {...props} aria-hidden="true" />; // fallback to creditcard icon.
+  };
+
+
+  // if still loading cards, show a loading message.
+  if (isLoading) {
+    return <div style={{padding: '50px', textAlign: 'center'}} role="status" aria-live="polite">Loading loyalty cards...</div>;
+  }
+
+  // this is the html structure of the page.
   return (
-    <main className={`${styles.loyaltyCardsPage} ${!isMenuOpen ? styles.menuClosed : ""}`}>
+    <main 
+      className={`${styles.loyaltyCardsPage} ${!isMenuOpen ? styles.menuClosed : ''}`}
+      role="main"
+      aria-labelledby="page-heading"
+    >
+      {/* this header area stays at the top when scrolling. */}
       <div className={styles.stickyHeaderArea}>
-        <div className={styles.header}>
-          <h1>Loyalty Cards</h1>
+        <header className={styles.header}>
+          <h1 id="page-heading">Loyalty Cards</h1>
           <div className={styles.notificationButtonWrapper}>
             <button
               className={styles.notificationBtn}
               onClick={toggleNotificationModal}
               onMouseDown={handleNotificationButtonMouseDown}
+              aria-label="View notifications"
+              aria-haspopup="true" // tells screen readers it opens a pop-up.
+              aria-expanded={isNotificationModalOpen} // tells if pop-up is open.
             >
-              <BellIcon />
+              <BellIcon size={24} aria-hidden="true"/>
             </button>
+            {/* if notification modal should be open, show it. */}
             {isNotificationModalOpen && <NotificationModal onClose={() => setIsNotificationModalOpen(false)} />}
           </div>
-        </div>
-        <div className={styles.controlsHeader}>
-          <button className={styles.createCardButton} onClick={handleCreateCard}>
-            <Plus size={18} /> Create Card
-          </button>
-          <div className={styles.filterControls}>
-            <span>Filter by:</span>
-            <select className={styles.filterDropdown} value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-              <option value="All">Status</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-            <select className={styles.filterDropdown} value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
-              <option value="All">Type</option>
-              <option value="Stamp">Stamp</option>
-              <option value="Membership">Membership</option>
-            </select>
-            <div className={styles.searchContainer}>
-              <Search size={20} className={styles.searchIcon} />
-              <input
-                type="text"
-                placeholder="Search"
-                className={styles.searchInput}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
+        </header>
+
+        {/* filter bar section. */}
+        <div className={styles.filterBarContainer} role="search" aria-labelledby="filter-bar-heading">
+          <span id="filter-bar-heading" className={styles.filterLabel}>Filter by:</span>
+          {/* status filter dropdown. */}
+          <label htmlFor="status-filter" className="visually-hidden">Filter by status</label>
+          <select id="status-filter" className={styles.filterDropdown} value={statusFilter} onChange={handleStatusFilterChange}>
+            <option value="">Status</option> 
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+          {/* type filter dropdown. */}
+          <label htmlFor="type-filter" className="visually-hidden">Filter by type</label>
+          <select id="type-filter" className={styles.filterDropdown} value={typeFilter} onChange={handleTypeFilterChange}>
+            <option value="">Type</option> 
+            <option value="Stamp">Stamp Card</option>
+            <option value="Membership">Membership</option>
+            <option value="Discount">Discount</option>
+            <option value="Reward">Reward</option>
+            <option value="Coupon">Coupon</option>
+            <option value="Cashback">Cashback</option>
+            <option value="Gift">Gift</option>
+            <option value="Multipass">Multipass</option>
+            <option value="Custom">Custom</option>
+          </select>
+          {/* search input. */}
+          <div className={styles.searchInputContainer}>
+            <Search size={18} className={styles.searchIcon} aria-hidden="true" />
+            <label htmlFor="search-cards-input" className="visually-hidden">Search loyalty cards</label>
+            <input 
+              type="text" 
+              id="search-cards-input"
+              placeholder="Search" 
+              className={styles.searchInput} 
+              value={searchTerm}
+              onChange={handleSearchChange}
+              aria-label="Search loyalty cards by name"
+            />
           </div>
         </div>
       </div>
 
-      <div className={styles.cardsGrid}>
-        {filteredCards.map(card => (
-          <LoyaltyCard key={card.id} card={card} onDeleteCard={handleDeleteCard} />
-        ))}
-        {filteredCards.length === 0 && (
-          <p className={styles.noCardsMessage}>No loyalty cards match your filters. Try creating one!</p>
-        )}
+      {/* area where all the cards are displayed. */}
+      <div className={styles.cardsDisplayArea}>
+        {/* loop through each card and create its display element. */}
+        {displayedCards.map(card => {
+          const statusTags = generateStatusTags(card);
+          const actionIcons = generateActionIcons(card);
+          
+          const cardTitleId = `card-title-${card.id}`; // unique id for the card title for accessibility.
+          // get the icon/image for the card preview.
+          const overlayIconRendered = renderIcon(card.overlayIconName, { 
+            size: 72, // size for the overlay icon.
+          }, true); // 'true' means it's an overlay icon.
+          // get the icon/image for the main button on the card.
+          const buttonIconRendered = renderIcon(card.buttonIconName, { size: 20, strokeWidth: 2.5 });
+
+          return (
+            <article key={card.id} className={styles.cardItem} aria-labelledby={cardTitleId}>
+              <h2 id={cardTitleId} className={styles.cardTitle}>{card.title}</h2>
+              <div className={styles.phoneImageContainer}>
+                {/* if there's an overlay icon, show it. */}
+                {card.overlayIconName && 
+                  <div className={styles.overlayIconContainer}>
+                    {overlayIconRendered}
+                  </div>
+                }
+                {/* the phone image itself. */}
+                <img src={card.phoneImage || '/images/phone.png'} alt={`${card.title} card preview`} className={styles.phoneImage} />
+              </div>
+              {/* the main action button for the card. */}
+              <button 
+                className={`${styles.actionButton} ${card.buttonType === 'primary' ? styles.primaryButton : styles.secondaryButton}`}
+                onClick={() => {
+                  // if it's the placeholder, go to create page. otherwise, go to edit page.
+                  if (card.isPlaceholder) { 
+                    navigate('/loyalty-cards/create');
+                  } else {
+                    navigate(`/loyalty-cards/edit/${card.id}`);
+                  }
+                }}
+                aria-label={card.isPlaceholder ? card.buttonText : `${card.buttonText} for ${card.title}`}
+              >
+                {/* if there's a button icon, show it. */}
+                {card.buttonIconName && <span className={styles.buttonIconWrapper} aria-hidden="true">{buttonIconRendered}</span>}
+                {card.buttonText}
+              </button>
+              {/* if there are status tags, show them. */}
+              {statusTags.length > 0 && (
+                <div className={styles.statusTags} aria-label={`Status tags for ${card.title}`}>
+                  {statusTags.map((tag, index) => ( 
+                    <span key={`${card.id}-tag-${tag.text}-${index}`} className={`${styles.statusTag} ${styles[tag.type + 'Tag']}`}>
+                      {tag.text}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {/* if there are action icons, show them. */}
+              {actionIcons.length > 0 && ( 
+                <div className={styles.actionIcons} role="toolbar" aria-label={`Actions for ${card.title}`}>
+                  {actionIcons.map((action) => (
+                    <button 
+                      key={`${card.id}-action-${action.id}`} 
+                      className={styles.iconButton} 
+                      aria-label={`${action.label} ${card.title}`}
+                      onClick={action.action}
+                    >
+                      {renderIcon(action.iconName)}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </article>
+          );
+        })}
       </div>
+      {/* delete confirmation pop-up. */}
+      <ConfirmationModal
+        isOpen={showDeleteModal}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title={`Are you sure you want to delete "${cardToDeleteTitle}"?`}
+        message="This action cannot be undone."
+        confirmButtonText="Delete"
+        cancelButtonText="Cancel"
+      />
+
+      {/* status toggle confirmation pop-up. */}
+      {cardToToggleStatus && ( // only render if there's a card to toggle.
+        <ConfirmationModal
+          isOpen={showStatusToggleModal}
+          onClose={handleCancelStatusToggle}
+          onConfirm={handleConfirmStatusToggle}
+          title={`Are you sure you want to ${cardToToggleStatus.currentStatus === 'active' ? 'deactivate' : 'activate'} "${cardToToggleStatus.title}"?`}
+          message="You can always change this later."
+          confirmButtonText="Confirm"
+          cancelButtonText="Cancel"
+        />
+      )}
     </main>
   );
-}
+};
 
 export default LoyaltyCardsPage;

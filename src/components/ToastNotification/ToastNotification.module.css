@@ -1,0 +1,89 @@
+.toastContainer {
+  position: fixed; /* keeps the container in a fixed position on the screen. */
+  top: 20px;
+  right: 20px;
+  z-index: 2000; /* ensures toasts are on top of almost everything. */
+  display: flex; /* using flexbox for layout. */
+  flex-direction: column; /* stacks toasts vertically. */
+  gap: 10px;
+  align-items: flex-end; /* aligns toasts to the right edge of the container. */
+}
+
+.toast {
+  display: flex; /* using flexbox for the layout of a single toast. */
+  align-items: stretch; /* makes icon area and text area the same height. */
+  min-width: 300px;
+  max-width: 380px;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border-radius: 16px; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden; /* important for the icon area's background color to not bleed out. */
+  animation: slideInRight 0.4s ease-out forwards, fadeOut 0.4s ease-in forwards 4.6s; /* slide in, then fade out after a delay. */
+}
+
+.iconArea {
+  padding: 20px; 
+  display: flex; /* for centering the icon inside. */
+  align-items: center; 
+  justify-content: center; 
+  flex-shrink: 0; /* prevents the icon area from shrinking if the text is long. */
+}
+
+.iconArea.success {
+  background-color: var(--accent-secondary-light-green); 
+}
+.iconArea.success svg {
+  color: var(--accent-secondary-green); 
+}
+
+.iconArea.error {
+  background-color: #FFD6D3; 
+}
+.iconArea.error svg {
+  color: #D32F2F; 
+}
+
+.contentArea {
+  padding: 16px 20px;
+  display: flex; /* for vertical centering of text content. */
+  flex-direction: column; 
+  justify-content: center; 
+  flex-grow: 1; /* allows this area to take up remaining space. */
+}
+
+.title {
+  font-size: 0.8rem; 
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.message {
+  font-size: 1rem; 
+  font-weight: 500; 
+  line-height: 1.4;
+}
+
+/* animation for the toast sliding in from the right. */
+@keyframes slideInRight {
+  from {
+    transform: translateX(120%); /* starts off-screen to the right. */
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0); /* slides to its final position. */
+    opacity: 1;
+  }
+}
+
+/* animation for the toast fading out. */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(20px); /* optional: slight move to the right as it fades. */
+  }
+}

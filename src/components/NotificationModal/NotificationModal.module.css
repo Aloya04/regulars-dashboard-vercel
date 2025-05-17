@@ -1,57 +1,58 @@
 .modalOverlay {
-  position: fixed;
+  position: fixed; 
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
-  display: flex;
-  align-items: flex-start; /* Align to top for notification bell */
-  justify-content: flex-end; /* Align to right for notification bell */
-  z-index: 1000; /* Ensure it's above other content */
-  padding: 20px; /* Give some space from edges */
+  bottom: 0; 
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex; /* using flexbox for alignment. */
+  align-items: flex-start; /* align modal to the top. */
+  justify-content: flex-end; /* align modal to the right. */
+  z-index: 1010; /* ensures modal is above most content but below critical pop-ups. */
+  padding: 20px; 
 }
 
 .modalContent {
-  background-color: var(--solid-white-static); /* Fixed white background */
-  color: var(--true-black-static); /* Fixed black text */
+  background-color: var(--solid-white-static); 
+  color: var(--true-black-static); 
   padding: 24px;
-  border-radius: 20px; /* Prominent border radius */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* Softer, more spread shadow */
-  width: 400px; /* Fixed width or max-width */
+  border-radius: 20px; 
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); 
+  width: 400px; 
   max-width: 90vw;
-  position: relative; /* For positioning near bell if needed, or just general styling */
-  margin-top: 50px; /* Example: distance from top right bell icon */
-  margin-right: 10px; /* Example: distance from top right bell icon */
-  animation: fadeIn 0.3s ease-out;
+  position: relative; /* for specific positioning if needed, e.g., relative to the bell icon. */
+  margin-top: 50px; 
+  margin-right: 10px; 
+  animation: fadeIn 0.3s ease-out; /* fade-in animation. */
 }
 
+/* defines the 'fadein' animation. */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-10px); } /* starts transparent and slightly above. */
+  to { opacity: 1; transform: translateY(0); } /* fades in to its normal position. */
 }
 
 .modalHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; /* using flexbox for header layout. */
+  justify-content: space-between; /* spaces out title and potential close button. */
+  align-items: center; /* vertically aligns items. */
   margin-bottom: 16px;
-  border-bottom: 1px solid var(--border-color); /* Subtle separator for header */
+  border-bottom: 1px solid var(--border-color); 
   padding-bottom: 12px;
 }
 
 .modalHeader h2 {
-  font-size: 22px; /* Slightly adjusted from image for balance */
+  font-size: 22px; 
   font-weight: 600;
   color: var(--true-black-static);
   margin: 0;
 }
 
-.closeButtonInternal { /* Optional close button inside modal */
+.closeButtonInternal { 
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--text-secondary); /* Use a secondary text color for less emphasis */
+  color: var(--text-secondary); 
 }
 .closeButtonInternal:hover {
   color: var(--true-black-static);
@@ -61,50 +62,45 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 300px; /* Allow scrolling for many notifications */
-  overflow-y: auto;
+  max-height: 300px; /* limits height and enables scrolling for long lists. */
+  overflow-y: auto; /* shows scrollbar if content overflows. */
 }
 
 .notificationItem {
-  display: flex;
-  align-items: flex-start; /* Align icon to the top of the text */
-  gap: 16px; /* Space between icon and text */
-  padding: 12px 4px; /* Padding around each item, reduced horizontal for list */
+  display: flex; /* using flexbox for item layout. */
+  align-items: flex-start; /* aligns icon to the top of the text content. */
+  gap: 16px; 
+  padding: 12px 4px; 
   color: var(--true-black-static);
 }
 
-/* Remove border between items to match image */
-/* .notificationItem:not(:last-child) {
-  border-bottom: 1px solid var(--border-color); 
-} */
-
 .iconContainer {
-  position: relative;
-  color: var(--true-black-static); /* Ensure icon is black */
-  flex-shrink: 0; /* Prevent icon from shrinking */
-  margin-top: 2px; /* Slight adjustment for visual alignment with text */
+  position: relative; /* for positioning the red dot. */
+  color: var(--true-black-static); 
+  flex-shrink: 0; /* prevents icon from shrinking if text is long. */
+  margin-top: 2px; 
 }
 
 .iconContainer svg {
-  width: 22px; /* Slightly smaller icon for balance */
+  width: 22px; 
   height: 22px;
 }
 
 .redDot {
-  position: absolute;
-  top: -2px;  /* Adjust for visual centering on the bell */
-  right: -2px; /* Adjust for visual centering on the bell */
+  position: absolute; /* positions the dot relative to iconcontainer. */
+  top: -2px;  
+  right: -2px; 
   width: 8px;
   height: 8px;
-  background-color: #FF3B30; /* iOS-like red */
+  background-color: #FF3B30; 
   border-radius: 50%;
-  border: 1px solid var(--solid-white-static); /* White border around dot */
+  border: 1px solid var(--solid-white-static); 
 }
 
 .notificationText {
   font-size: 14px;
   line-height: 1.5;
-  flex-grow: 1;
+  flex-grow: 1; /* allows text to take up remaining space. */
 }
 
 .noNotifications {
@@ -113,14 +109,9 @@
   padding: 20px 0;
 }
 
-
-/* Mobile (below 768px) */
+/* mobile specific adjustments */
 @media screen and (max-width: 768px) {
 .modalContent {
-    
-    margin-right: 70px;
-    
+    margin-right: 70px; /* adjust margin for mobile view if sidebar is present. */
 }
-
-
 }

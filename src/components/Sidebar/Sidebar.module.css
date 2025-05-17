@@ -1,34 +1,33 @@
 .sidebar {
   width: 306px;
-  background: var(--true-black-static); /* Changed to static black */
-  transition: width 0.3s ease, padding 0.3s ease;
+  background: var(--true-black-static); 
+  transition: width 0.3s ease, padding 0.3s ease; /* smooth transition for width and padding changes. */
   padding: 36px 16px;
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* Ensure it spans the full viewport height */
-  position: fixed; /* Keep it fixed on the screen */
-  top: 0; /* Align to the top of the viewport */
-  left: 0; /* Ensure it starts at the left edge */
-  overflow: hidden; /* Prevent scrolling within the sidebar */
-  z-index: 200; /* Adjusted z-index: Ensure sidebar is above the overlay (overlay z-index is 150) */
+  display: flex; /* enables flexbox layout. */
+  flex-direction: column; /* stacks child elements vertically. */
+  height: 100vh; 
+  position: fixed; /* keeps sidebar fixed during page scroll. */
+  top: 0; 
+  left: 0; 
+  overflow: hidden; /* prevents internal scrolling of the sidebar itself. */
+  z-index: 200; /* ensures sidebar is above other content like overlays. */
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 1.5rem; /* Was 24px */
+  display: flex; /* for aligning items within the logo area. */
+  align-items: center; 
+  justify-content: space-between; 
+  font-size: 1.5rem; 
   font-weight: 600;
   margin-bottom: 40px;
   padding: 0 12px;
 }
 
 .logoWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; /* for aligning logo image and collapse arrow. */
+  align-items: center; 
+  justify-content: space-between; 
   width: 100%;
- 
 }
 
 .logoImg {
@@ -37,142 +36,153 @@
 }
 
 .collapseArrow {
-  color: var(--solid-white-static); /* Changed to static white */
+  color: var(--solid-white-static); 
   width: 24px;
   height: 24px;
   cursor: pointer;
-  flex-shrink: 0;
-   margin-bottom: 4px; /* Adjusted margin for better spacing */
+  flex-shrink: 0; /* prevents the arrow from shrinking if space is tight. */
+  margin-bottom: 4px; 
 }
 
 .menuItems {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px; /* Add spacing between menu items */
+  flex: 1; /* allows this section to grow and take available vertical space. */
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px; 
 }
 
 .navItem {
-  display: flex;
-  align-items: center;
+  display: flex; 
+  align-items: center; 
   padding: 12px;
-  color: var(--solid-white-static); /* Changed to static white */
+  color: var(--solid-white-static); 
   cursor: pointer;
   margin-bottom: 8px;
   border-radius: 8px;
-  transition: background 0.3s ease;
-  font-size: 1rem; /* Was 16px */
+  transition: background 0.3s ease, font-weight 0.3s ease; /* smooth transition for background and font weight. */
+  font-size: 1rem; 
+  position: relative; /* for positioning the active item indicator (::before pseudo-element). */
 }
 
 .navItem span,
 .logo span {
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  white-space: nowrap; /* Prevent text wrapping during animation */
-  overflow: hidden; /* Ensure text is clipped when sidebar collapses */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* smooth transition for text visibility and position. */
+  white-space: nowrap; 
+  overflow: hidden; 
 }
 
 .navItem:hover {
-  background: rgba(255, 255, 255, 0.1); /* This is fine as it's an overlay on black */
+  background: rgba(255, 255, 255, 0.1); 
 }
 
 .navItem.active {
-  background: rgba(255, 255, 255, 0.1); /* This is fine */
+  font-weight: 700; 
+}
+
+/* active item indicator line */
+.navItem.active::before {
+  content: "";
+  position: absolute; 
+  left: -4px; 
+  top: 50%;
+  transform: translateY(-50%); /* vertically centers the line. */
+  width: 4px; 
+  height: 60%; 
+  background-color: var(--solid-white-static);
+  border-radius: 0 2px 2px 0; 
 }
 
 .navItem svg {
-  width: 24px; /* Keep icon size fixed or use em if it should scale with text */
-  height: 24px; /* Keep icon size fixed or use em */
+  width: 24px; 
+  height: 24px; 
   margin-right: 16px; 
-  /* SVG font-size was 20px, often not needed as size is controlled by width/height */
-  /* If you need to scale icons with font, consider using em for width/height too */
-  transition: margin-right 0.3s ease, transform 0.3s ease;
+  transition: margin-right 0.3s ease, transform 0.3s ease; /* smooth transition for icon margin and scale. */
 }
+
+/* styles for when the menu is closed (narrow) */
 .menuClosed .logoWrapper {
- 
-  justify-content: center;
-  
+  justify-content: center; /* centers the collapse arrow when logo text is hidden. */
 }
 .menuClosed .navItem span,
 .menuClosed .logo span {
-  opacity: 0;
-  transform: translateX(-10px);
-  pointer-events: none; /* Prevent interaction with hidden text */
+  opacity: 0; /* hide text. */
+  transform: translateX(-10px); /* move text slightly left before hiding for a smoother effect. */
+  pointer-events: none; /* prevent interaction with hidden text. */
 }
 
 .menuClosed .navItem svg {
-  margin-right: 0; /* Remove margin when closed */
-  transform: scale(0.9); /* Slightly shrink icons for a smoother effect */
-  transition: transform 0.3s ease; /* Smooth transition for icon scaling */
+  margin-right: 0; 
+  transform: scale(0.9); /* slightly shrink icons. */
+  transition: transform 0.3s ease; 
 }
 
-
 .menuClosed .navItem {
-  justify-content: center; /* Center icons horizontally */
-  align-items: center; /* Center icons vertically */
+  justify-content: center; /* center icons horizontally. */
+  align-items: center; /* center icons vertically. */
 }
 
 .bottomMenu {
-  margin-top: auto;
-  border-top: 1px solid rgba(255, 255, 255, 0.1); /* This is fine */
+  margin-top: auto; /* pushes this section to the bottom of the flex container. */
+  border-top: 1px solid rgba(255, 255, 255, 0.1); 
   padding-top: 24px;
 }
 
 .sidebar.menuClosed {
-  width: 80px;
-  padding: 36px 8px; /* Adjust padding for closed state */
+  width: 80px; /* narrow width. */
+  padding: 36px 8px; 
 }
 
 .menuClosed .navItem span,
 .menuClosed .logo span {
-  display: none;
+  display: none; /* ensure text is not displayed. */
 }
 
 .menuClosed .logoImg {
-  display: none;
+  display: none; /* hide logo image when closed. */
 }
 
-/* Responsive Design for Smaller Screens */
+/* responsive design for smaller screen heights */
 @media screen and (max-height: 768px) {
   .sidebar {
-    padding: 24px 12px; /* Reduce padding */
+    padding: 24px 12px; 
   }
 
   .logo {
-    font-size: 1.25rem; /* Was 20px */
+    font-size: 1.25rem; 
   }
 
   .navItem {
-    font-size: 0.875rem; /* Was 14px */
-    padding: 8px; /* Reduce padding */
+    font-size: 0.875rem; 
+    padding: 8px; 
   }
 }
 
-
-/* Mobile (below 768px) */
+/* responsive design for mobile screens (width) */
 @media screen and (max-width: 768px) {
   .sidebar {
-  width: 306px;
-  background: var(--true-black-static); /* Changed to static black */
-  transition: width 0.3s ease, padding 0.3s ease;
-  padding: 36px 16px;
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* Ensure it spans the full viewport height */
-  position: fixed; /* Keep it fixed on the screen */
-  top: 0; /* Align to the top of the viewport */
-  right: 0; /* Ensure it starts at the left edge */
-  left: unset;
-  overflow: hidden; /* Prevent scrolling within the sidebar */
-}
-.sidebar.menuClosed {
-  display: flex;
-  width: 60px;
-  padding: 36px 8px; /* Adjust padding for closed state */
-  top: 0;
-  right: 0;
-}
-
-
+    /* on mobile, sidebar might behave differently, e.g., overlaying content.
+       current styles keep it fixed but change its position to the right. */
+    width: 306px; /* full width when open on mobile. */
+    background: var(--true-black-static); 
+    transition: width 0.3s ease, padding 0.3s ease; 
+    padding: 36px 16px;
+    display: flex; 
+    flex-direction: column; 
+    height: 100vh; 
+    position: fixed; 
+    top: 0; 
+    right: 0; /* positions sidebar to the right on mobile. */
+    left: unset; /* removes the default left positioning. */
+    overflow: hidden; 
+  }
+  .sidebar.menuClosed {
+    /* when closed on mobile, it becomes a narrow bar on the right. */
+    display: flex; 
+    width: 60px; 
+    padding: 36px 8px; 
+    top: 0;
+    right: 0;
+  }
 }

@@ -1,25 +1,28 @@
 .appContainer {
-  display: flex;
-  min-height: 100vh; /* Ensure the app container spans the full height */
-  overflow: hidden; /* Prevent unnecessary scrolling */
-  position: relative; /* Context for absolute/fixed children if needed, though sidebar is fixed */
+  display: flex; /* enables flexbox layout for the main app container. */
+  min-height: 100vh; 
+  overflow: hidden; 
+  position: relative; /* sets a positioning context for children, like the overlay. */
 }
 
+/* styles for the overlay shown on mobile when the sidebar is open. */
 .overlay {
-  position: fixed;
+  position: fixed; /* fixed position to cover the screen. */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-  z-index: 150; /* Adjusted z-index */
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 150; /* ensures overlay is above content but below the sidebar. */
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Hide after fade */
+  /* smooth transition for opacity and visibility. */
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; 
 }
 
 .overlayVisible {
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.3s ease-in-out, visibility 0s linear 0s; /* Show immediately then fade */
+  /* transition for showing the overlay. */
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0s; 
 }
