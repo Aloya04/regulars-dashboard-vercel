@@ -1,4 +1,4 @@
-// this file helps us manage user data in our firebase database.
+// this file helps manage user data in our firebase database.
 import { db } from '../firebase/firebase.js'; // our firebase database connection.
 // functions from firebase to work with the database.
 import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, query, where } from "firebase/firestore";
