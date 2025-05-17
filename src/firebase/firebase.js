@@ -6,12 +6,12 @@ import { getFirestore, enableIndexedDbPersistence} from "firebase/firestore";
 // it tells your app which firebase project to connect to.
 // now using environment variables for security and flexibility.
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyAe6TwG97dPu-tQPgSH3VIUiCqspK91orU",
+  authDomain: "regulars-3a4e8.firebaseapp.com",
+  projectId: "regulars-3a4e8",
+  storageBucket: "regulars-3a4e8.firebasestorage.app",
+  messagingSenderId: "918091340439",
+  appId: "1:918091340439:web:b2760681e340106678a7d2"
 };
 
 // initialize the firebase app with our config.
